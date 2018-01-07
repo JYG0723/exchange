@@ -1,27 +1,35 @@
+# class file
+*.class
+
+# package file
+*.war
+*.ear
+
+# maven ignore
 target/
-!.mvn/wrapper/maven-wrapper.jar
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
+# eclipse ignore
+.settings/
 .project
-.settings
-.springBeans
+.classpatch
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
+# idea
+.idea/
+/idea/
 *.ipr
-.mvn
+*.iml
+*.iws
 mvnw.cmd
+.mvn
 mvnw
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+# temp file
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
