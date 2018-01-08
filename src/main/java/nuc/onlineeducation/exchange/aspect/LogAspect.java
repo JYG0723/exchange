@@ -6,6 +6,7 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +20,12 @@ public class LogAspect {
 
     private static Long executeLong = null;
 
-    @Before("execution(public * nuc.onlineeducation.exchange.controller.*Controller.*(..))")
+    @Pointcut("execution(public * nuc.onlineeducation.exchange.controller.*Controller.*(..))")
+    public void controllerLog() {
+
+    }
+
+    @Before(value = "controllerLog()")
     public void beforMethod(JoinPoint joinPoint) {
         executeLong = System.currentTimeMillis();
 
@@ -34,7 +40,7 @@ public class LogAspect {
         log.info(argsBuffer.toString());
     }
 
-    @After("execution(public * nuc.onlineeducation.exchange.controller.*Controller.*(..))")
+    @After(value = "controllerLog()")
     public void afterMethod() {
         executeLong = System.currentTimeMillis() - executeLong;
         log.info("目标方法执行时间:{}",executeLong + "毫秒");
