@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="nuc.onlineeducation.exchange.dao.MessageMapper">
+    <resultMap id="BaseResultMap" type="nuc.onlineeducation.exchange.model.Message">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="from_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="to_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="has_read" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="conversation_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, from_id, to_id, has_read, conversation_id, create_time, update_time, content
+    </sql>
+    <sql id="Column_List">
+        from_id, to_id, has_read, conversation_id, create_time, update_time, content
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from exchange_message
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM exchange_message
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="nuc.onlineeducation.exchange.model.Message" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO exchange_message (id, from_id, to_id, has_read, conversation_id,
+                                      create_time, update_time, content
+        )
+        VALUES
+            (#{id,jdbcType=INTEGER}, #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER}, #{hasRead,jdbcType=INTEGER},
+             #{conversationId,jdbcType=VARCHAR},
+             now(), now(), #{content,jdbcType=LONGVARCHAR}
+            )
+    </insert>
+    <insert id="insertSelective" parameterType="nuc.onlineeducation.exchange.model.Message">
+        insert into exchange_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fromId != null">
+                from_id,
+            </if>
+            <if test="toId != null">
+                to_id,
+            </if>
+            <if test="hasRead != null">
+                has_read,
+            </if>
+            <if test="conversationId != null">
+                conversation_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="fromId != null">
+                #{fromId,jdbcType=INTEGER},
+            </if>
+            <if test="toId != null">
+                #{toId,jdbcType=INTEGER},
+            </if>
+            <if test="hasRead != null">
+                #{hasRead,jdbcType=INTEGER},
+            </if>
+            <if test="conversationId != null">
+                #{conversationId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="updateTime != null">
+                now(),
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="nuc.onlineeducation.exchange.model.Message">
+        update exchange_message
+        <set>
+            <if test="fromId != null">
+                from_id = #{fromId,jdbcType=INTEGER},
+            </if>
+            <if test="toId != null">
+                to_id = #{toId,jdbcType=INTEGER},
+            </if>
+            <if test="hasRead != null">
+                has_read = #{hasRead,jdbcType=INTEGER},
+            </if>
+            <if test="conversationId != null">
+                conversation_id = #{conversationId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="nuc.onlineeducation.exchange.model.Message">
+        UPDATE exchange_message
+        SET from_id         = #{fromId,jdbcType=INTEGER},
+            to_id           = #{toId,jdbcType=INTEGER},
+            has_read        = #{hasRead,jdbcType=INTEGER},
+            conversation_id = #{conversationId,jdbcType=VARCHAR},
+            create_time     = #{createTime,jdbcType=TIMESTAMP},
+            update_time     = now(),
+            content         = #{content,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getConversationDetail" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        exchange_message
+        WHERE conversation_id = #{conversationId}
+        ORDER BY create_time desc
+    </select>
+    <select id="getConversationList" resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Column_List"/>,count(id) as id
+        FROM (select
+        <include refid="Base_Column_List"/>
+        from exchange_message where from_id = #{userId} or to_id = #{userId} order by create_time desc) tt group by
+        conversation_id order by
+        create_time desc
+    </select>
+    <select id="getConversationUnreadCount" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(id)
+        FROM exchange_message
+        WHERE has_read = 1
+              AND to_id = #{userId} AND conversation_id = #{conversationId}
+    </select>
+    <update id="updateHasRead" parameterType="java.util.List">
+        UPDATE exchange_message
+        SET has_read = 0
+        WHERE id = #{messageId}
+    </update>
+</mapper>

@@ -20,6 +20,24 @@ spring:
 
 # Mybatis
 mybatis:
+  # 对应实体类的包结构
   type-aliases-package: nuc.nuc.onlineeducation.exchange.model
-  mapper-locations: classpath:/mappers/*.xml
-  config-location: classpath:/mybatis-config.xml
+  # mapper.xml 文件的路径
+  mapper-locations: classpath:/nuc/onlineeducation/exchange/dao/*.xml
+  configuration:
+    # 启用缓存
+    cache-enabled: true
+    # 读取超时
+    default-statement-timeout: 3000
+    # 驼峰命名
+    map-underscore-to-camel-case: true
+    # 生成返回
+    use-generated-keys: true
+
+# PageHelper
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+

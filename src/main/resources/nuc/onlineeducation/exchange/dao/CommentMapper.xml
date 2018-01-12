@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="nuc.onlineeducation.exchange.dao.CommentMapper">
+    <resultMap id="BaseResultMap" type="nuc.onlineeducation.exchange.model.Comment">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="entity_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="entity_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="nuc.onlineeducation.exchange.model.Comment">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="entity_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="entity_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, entity_id, entity_type, status, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from exchange_comment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM exchange_comment
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="nuc.onlineeducation.exchange.model.Comment">
+        INSERT INTO exchange_comment (id, user_id, entity_id,
+                                      entity_type, status,
+                                      create_time, update_time, content
+        )
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{entityId,jdbcType=INTEGER},
+                #{entityType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+                now(), now(), #{content,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="nuc.onlineeducation.exchange.model.Comment">
+        insert into exchange_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="entityId != null">
+                entity_id,
+            </if>
+            <if test="entityType != null">
+                entity_type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="entityId != null">
+                #{entityId,jdbcType=INTEGER},
+            </if>
+            <if test="entityType != null">
+                #{entityType,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="updateTime != null">
+                now(),
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="nuc.onlineeducation.exchange.model.Comment">
+        update exchange_comment
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="entityId != null">
+                entity_id = #{entityId,jdbcType=INTEGER},
+            </if>
+            <if test="entityType != null">
+                entity_type = #{entityType,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="nuc.onlineeducation.exchange.model.Comment">
+        UPDATE exchange_comment
+        SET user_id      = #{userId,jdbcType=INTEGER},
+            entity_id    = #{entityId,jdbcType=INTEGER},
+            entity_type  = #{entityType,jdbcType=INTEGER},
+            status       = #{status,jdbcType=INTEGER},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            update_time  = now(),
+            content      = #{content,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectCommentsByEntity" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_comment
+        WHERE entity_id = #{entityId}
+        AND entity_type = #{entityType}
+        ORDER BY create_time DESC
+    </select>
+    <select id="getCommentCountByEntity" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(id)
+        FROM exchange_comment
+        WHERE entity_id = #{entityId}
+        AND entity_type = #{entityType}
+    </select>
+    <update id="updateCommentStatus" parameterType="map">
+        UPDATE exchange_comment
+        SET status = #{status}
+        WHERE entity_id = #{commentId}
+    </update>
+</mapper>
