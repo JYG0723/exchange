@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="nuc.onlineeducation.exchange.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="nuc.onlineeducation.exchange.model.User">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="head_url" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="position" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="introduce" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="question" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="answer" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="profile" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, password, head_url, gender, email, phone, position, introduce, question,
+        answer, role, create_time, update_time, profile
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from exchange_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM exchange_user
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="nuc.onlineeducation.exchange.model.User">
+        INSERT INTO exchange_user (id, username, password,
+                                   head_url, gender, email,
+                                   phone, position, introduce,
+                                   question, answer, role,
+                                   create_time, update_time, profile
+        )
+        VALUES (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                                        #{headUrl,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+                                        #{email,jdbcType=VARCHAR},
+                                        #{phone,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR},
+                                        #{introduce,jdbcType=VARCHAR},
+                                        #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
+                #{role,jdbcType=INTEGER},
+                now(), now(), #{profile,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="nuc.onlineeducation.exchange.model.User">
+        insert into exchange_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="headUrl != null">
+                head_url,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="introduce != null">
+                introduce,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="profile != null">
+                profile,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="headUrl != null">
+                #{headUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="introduce != null">
+                #{introduce,jdbcType=VARCHAR},
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="updateTime != null">
+                now(),
+            </if>
+            <if test="profile != null">
+                #{profile,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="nuc.onlineeducation.exchange.model.User">
+        update exchange_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="headUrl != null">
+                head_url = #{headUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="introduce != null">
+                introduce = #{introduce,jdbcType=VARCHAR},
+            </if>
+            <if test="question != null">
+                question = #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+            <if test="profile != null">
+                profile = #{profile,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="nuc.onlineeducation.exchange.model.User">
+        UPDATE exchange_user
+        SET username    = #{username,jdbcType=VARCHAR},
+            password    = #{password,jdbcType=VARCHAR},
+            head_url    = #{headUrl,jdbcType=VARCHAR},
+            gender      = #{gender,jdbcType=INTEGER},
+            email       = #{email,jdbcType=VARCHAR},
+            phone       = #{phone,jdbcType=VARCHAR},
+            position    = #{position,jdbcType=VARCHAR},
+            introduce   = #{introduce,jdbcType=VARCHAR},
+            question    = #{question,jdbcType=VARCHAR},
+            answer      = #{answer,jdbcType=VARCHAR},
+            role        = #{role,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = now(),
+            profile     = #{profile,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="checkUsername" resultType="java.lang.Integer" parameterType="string">
+        SELECT count(1)
+        FROM exchange_user
+        WHERE username = #{username}
+    </select>
+    <select id="checkEmail" resultType="java.lang.Integer" parameterType="string">
+        SELECT count(1)
+        FROM exchange_user
+        WHERE email = #{email}
+    </select>
+    <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_user
+        WHERE username = #{username}
+        AND password = #{password}
+    </select>
+    <select id="selectQuestionByUsername" resultType="java.lang.String" parameterType="string">
+        SELECT question
+        FROM exchange_user
+        WHERE username = #{username}
+    </select>
+    <select id="checkAnswer" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(1)
+        FROM exchange_user
+        WHERE username = #{username}
+              AND question = #{question}
+              AND answer = #{answer}
+    </select>
+    <update id="updatePassword" parameterType="map">
+        UPDATE exchange_user
+        SET password = #{password}
+        WHERE username = #{username}
+    </update>
+    <select id="checkPassword" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(1)
+        FROM exchange_user
+        WHERE password = #{password}
+              AND id = #{userId}
+    </select>
+    <select id="selectByUsername" resultMap="BaseResultMap" resultType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_user
+        WHERE username = #{username}
+    </select>
+</mapper>
