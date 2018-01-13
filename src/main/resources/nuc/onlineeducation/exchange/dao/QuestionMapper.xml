@@ -117,7 +117,7 @@
             content       = #{content,jdbcType=LONGVARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
-    <select id="selectList" resultMap="BaseResultMap" parameterType="int">
+    <select id="selectListByUserId" resultMap="BaseResultMap" parameterType="int">
         SELECT
         <include refid="Base_Column_List"/>
         FROM exchange_question
@@ -129,4 +129,10 @@
         SET comment_count = #{count}
         WHERE id = #{entityId}
     </update>
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_question
+        ORDER BY create_time
+    </select>
 </mapper>

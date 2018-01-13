@@ -25,7 +25,7 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
         // 注意顺序
         registry.addInterceptor(passportInterceptor);
         registry.addInterceptor(loginRequiredInteceptor)
-                .addPathPatterns("/users/{id}").addPathPatterns("/users/password/reset")
+                .addPathPatterns("/users/password/reset")
                 .addPathPatterns("/questions/add")
                 .addPathPatterns("/comments/add")
                 .addPathPatterns("/messages/");

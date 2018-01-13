@@ -21,7 +21,9 @@ public interface QuestionMapper {
 
     int updateByPrimaryKey(Question record);
 
-    List<Question> selectList(@Param("userId") Integer userId);
+    List<Question> selectListByUserId(@Param("userId") Integer userId);
 
     int updateCommentCount(@Param("entityId") Integer entityId, @Param("count") Integer count);
+
+    List<Question> selectList();
 }

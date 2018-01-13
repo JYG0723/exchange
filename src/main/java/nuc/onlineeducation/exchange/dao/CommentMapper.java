@@ -26,4 +26,6 @@ public interface CommentMapper {
     int getCommentCountByEntity(@Param("entityId") Integer entityId, @Param("entityType") Integer entityType);
 
     int updateCommentStatus(@Param("commentId") Integer commentId, @Param("status") Integer status);
+
+    List<Comment> selectComments();
 }

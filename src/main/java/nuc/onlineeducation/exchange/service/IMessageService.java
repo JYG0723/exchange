@@ -17,4 +17,10 @@ public interface IMessageService {
     ServerResponse<PageInfo> getConversationList(Integer userId, Integer pageNum, Integer pageSize);
 
     ServerResponse<Integer> getConversationUnreadCount(Integer userId, String conversationId);
+
+    ServerResponse removeMessageById(Integer messageId);
+
+    ServerResponse<PageInfo> getMessages(Integer pageNum, Integer pageSize);
+
+    ServerResponse updateMessage(Message message);
 }

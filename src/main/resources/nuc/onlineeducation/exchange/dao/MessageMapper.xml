@@ -161,4 +161,10 @@
         SET has_read = 0
         WHERE id = #{messageId}
     </update>
+    <select id="selectMessages" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_message
+        ORDER BY create_time
+    </select>
 </mapper>

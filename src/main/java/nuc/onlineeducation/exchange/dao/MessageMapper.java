@@ -28,4 +28,6 @@ public interface MessageMapper {
     int getConversationUnreadCount(@Param("userId") int userId, @Param("conversationId") String conversationId);
 
     int updateHasRead(@Param("messageId") Integer messageId);
+
+    List<Message> selectMessages();
 }

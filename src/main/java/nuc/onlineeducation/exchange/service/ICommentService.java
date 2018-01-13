@@ -17,5 +17,9 @@ public interface ICommentService {
 
     ServerResponse getCommentCount(Integer entityId, Integer entityType);
 
-    ServerResponse deleteCommentById(Integer commentId);
+    ServerResponse removeCommentById(Integer commentId);
+
+    ServerResponse<PageInfo> getComments(Integer pageNum, Integer pageSize);
+
+    ServerResponse updateComment(Comment comment);
 }
