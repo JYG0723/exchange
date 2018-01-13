@@ -260,4 +260,10 @@
         FROM exchange_user
         WHERE username = #{username}
     </select>
+    <select id="selectTeachers" resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_user
+        WHERE role = #{teacherRole}
+    </select>
 </mapper>

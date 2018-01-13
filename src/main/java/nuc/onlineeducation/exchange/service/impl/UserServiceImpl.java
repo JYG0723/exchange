@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -55,7 +56,7 @@ public class UserServiceImpl implements IUserService {
         if (result == 0) {
             return ServerResponse.createByErrorMessage("注册失败");
         }
-        user = this.selectByUsername(user.getUsername()).getData();
+        user = this.getUserByUsername(user.getUsername()).getData();
         // 生成t票
         loginTicketService.addLoginTicket(user);// 注册后保证用户直接登录
         return ServerResponse.createBySuccess("注册成功", user);
@@ -133,7 +134,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse<String> selectQuestion(String username) {
+    public ServerResponse<String> getQuestionByUsername(String username) {
         ServerResponse validResponse = this.checkValid(username, Const.USERNAME);
         if (validResponse.isSuccess()) {
             return ServerResponse.createByErrorMessage("用户名不存在");
@@ -212,7 +213,7 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("旧密码错误");
         }
 
-        String md5Password = MD5Util.MD5EncodeUtf8(passwordNew+PropertiesUtil.getProperty("password.salt"));
+        String md5Password = MD5Util.MD5EncodeUtf8(passwordNew + PropertiesUtil.getProperty("password.salt"));
         user.setPassword(md5Password);
 
         int updateCount = userMapper.updateByPrimaryKeySelective(user);
@@ -251,7 +252,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse<User> selectByUsername(String username) {
+    public ServerResponse<User> getUserByUsername(String username) {
         if (StringUtils.isBlank(username)) {
             return ServerResponse.createByErrorMessage("用户名不能为空");
         }
@@ -260,6 +261,11 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createBySuccess(user);
         }
         return ServerResponse.createByErrorMessage("该用户不存在");
+    }
+
+    public ServerResponse<List<User>> getTeachers() {
+        List<User> teachers = userMapper.selectTeachers(Const.UserRoleEnum.ROLE_TEACHER.getCode());
+        return ServerResponse.createBySuccess("查询老师列表成功", teachers);
     }
 
     public static void main(String[] args) {

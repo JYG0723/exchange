@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author Ji YongGuang.
@@ -104,6 +105,9 @@ public class UserController {
             if (loginTicket != null) {// 写入客户端浏览器的cookie中
                 Cookie cookie = new Cookie("ticket", loginTicket.getTicket().toString());
                 cookie.setPath("/");
+                if (rememberme) {
+                    cookie.setMaxAge(3600 * 24 * 30);// 30天
+                }
                 httpServletResponse.addCookie(cookie);
                 if (StringUtils.isNotBlank(next) && next.contains("localhost:8080")) {// 站内链接
                     return ServerResponse.createBySuccess(next);
@@ -163,7 +167,7 @@ public class UserController {
      */
     @GetMapping(value = "/oblivion/questions/{username}")
     public ServerResponse<String> forgetGetQuestion(@PathVariable(value = "username") String username) {
-        return iUserService.selectQuestion(username);
+        return iUserService.getQuestionByUsername(username);
     }
 
     /**
@@ -208,11 +212,7 @@ public class UserController {
     @PostMapping(value = "/password/reset")
     public ServerResponse<String> resetPassword(@RequestParam(value = "passwordOld") String passwordOld,
                                                 @RequestParam(value = "passwordNew") String passwordNew) {// 接口没测
-        User currentUser = hostHolder.getUser();
-        if (currentUser == null) {
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
-        return iUserService.resetPassword(passwordOld, passwordNew, currentUser);
+        return iUserService.resetPassword(passwordOld, passwordNew, hostHolder.getUser());
     }
 
     /**
@@ -224,18 +224,22 @@ public class UserController {
      */
     @PutMapping(value = "/{id}")
     public ServerResponse<User> updateInformation(@PathVariable(value = "id") Integer id, User user) {
-        User currentUser = hostHolder.getUser();
-        if (currentUser == null) {
-            return ServerResponse.createByErrorMessage("用户未登录");
-        }
-//        不行就用cookie
-//        LoginTicket loginTicket = iLoginTicketService.getLoginTicketByTicket(ticket);
-//        User currentUser = iUserService.getUserById(loginTicket.getUserId()).getData();
-        user.setId(currentUser.getId());
+        user.setId(hostHolder.getUser().getId());
         ServerResponse<User> response = iUserService.updateInformation(user);
         if (response.isSuccess()) {
             hostHolder.setUser(response.getData());
         }
         return response;
     }
+
+    /**
+     * 邀请老师 - 查询所有老师
+     *
+     * @return
+     */
+    @GetMapping(value = "/")
+    public ServerResponse<List<User>> getTeacherList() {
+        return iUserService.getTeachers();
+    }
+
 }

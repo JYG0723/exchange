@@ -1,7 +1,6 @@
 package nuc.onlineeducation.exchange.controller.portal;
 
 import nuc.onlineeducation.exchange.common.Const;
-import nuc.onlineeducation.exchange.common.ResponseCodeEnum;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.Comment;
 import nuc.onlineeducation.exchange.model.HostHolder;
@@ -32,9 +31,10 @@ public class CommentController {
 
     /**
      * 新增评论
-     * @param entityId 评论的实体的id
+     *
+     * @param entityId   评论的实体的id
      * @param entityType 评论的实体的类型
-     * @param content 评论的内容
+     * @param content    评论的内容
      * @return
      */
     @PostMapping(value = "/add")
@@ -46,12 +46,7 @@ public class CommentController {
         comment.setEntityType(entityType);
         comment.setContent(content);
 //        comment.setUserId(49);
-        if (hostHolder.getUser() != null) {
-            comment.setUserId(hostHolder.getUser().getId());
-        } else {
-            return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), ResponseCodeEnum
-                    .NEED_LOGIN.getDesc());
-        }
+        comment.setUserId(hostHolder.getUser().getId());
         comment.setStatus(Const.CommentStatus.COMMENT_VISIBLE);
         iCommentService.saveComment(comment);// commentId
 
