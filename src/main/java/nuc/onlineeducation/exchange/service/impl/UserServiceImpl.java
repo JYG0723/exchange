@@ -263,14 +263,15 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("该用户不存在");
     }
 
+    @Override
     public ServerResponse<List<User>> getTeachers() {
         List<User> teachers = userMapper.selectTeachers(Const.UserRoleEnum.ROLE_TEACHER.getCode());
         return ServerResponse.createBySuccess("查询老师列表成功", teachers);
     }
 
-    public static void main(String[] args) {
-       /* String md5Password = MD5Util.MD5EncodeUtf8("hikari" + PropertiesUtil.getProperty("password.salt"));
-        System.out.println(md5Password);*/
-    }
+    /*public static void main(String[] args) {
+        String md5Password = MD5Util.MD5EncodeUtf8("USER0" + PropertiesUtil.getProperty("password.salt"));
+        System.out.println(md5Password);
+    }*/
 
 }

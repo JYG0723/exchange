@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * @author Ji YongGuang.
  * @date 14:42 2018/1/11.
@@ -25,9 +23,9 @@ public class CommentVO {
 
     private Integer status;
 
-    private Date createTime;
+    private String createTime;
 
-    private Date updateTime;
+    private String updateTime;
 
     private String content;
 

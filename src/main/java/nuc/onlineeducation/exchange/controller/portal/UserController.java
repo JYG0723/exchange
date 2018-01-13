@@ -93,7 +93,7 @@ public class UserController {
      * @param httpServletResponse httpServletResponse
      * @return
      */
-    @PostMapping(value = "/login")
+    @GetMapping(value = "/login")
     public ServerResponse login(@RequestParam(value = "username") String username,
                                 @RequestParam(value = "password") String password,
                                 @RequestParam(value = "rememberme", defaultValue = "false") Boolean rememberme,
@@ -237,7 +237,7 @@ public class UserController {
      *
      * @return
      */
-    @GetMapping(value = "/")
+    @GetMapping(path = "/teachers")
     public ServerResponse<List<User>> getTeacherList() {
         return iUserService.getTeachers();
     }

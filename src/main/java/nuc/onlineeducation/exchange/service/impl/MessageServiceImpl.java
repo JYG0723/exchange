@@ -14,6 +14,7 @@ import nuc.onlineeducation.exchange.model.Message;
 import nuc.onlineeducation.exchange.model.User;
 import nuc.onlineeducation.exchange.service.IMessageService;
 import nuc.onlineeducation.exchange.service.ISensitiveService;
+import nuc.onlineeducation.exchange.util.DateTimeUtil;
 import nuc.onlineeducation.exchange.vo.MessageVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import java.util.List;
  */
 @Log4j2
 @Service(value = "iMessageService")
-public class MessageService implements IMessageService {
+public class MessageServiceImpl implements IMessageService {
 
     @Autowired
     private MessageMapper messageMapper;
@@ -112,7 +113,7 @@ public class MessageService implements IMessageService {
         }
         int result = messageMapper.deleteByPrimaryKey(messageId);
         if (result > 0) {
-            return ServerResponse.createByErrorMessage("评论删除失败");
+            return ServerResponse.createByErrorMessage("评论删除成功");
         }
         return ServerResponse.createBySuccess();
     }
@@ -160,11 +161,12 @@ public class MessageService implements IMessageService {
         messageVO.setUnReadCount(this.getConversationUnreadCount(49, message
                 .getConversationId()).getData());
         messageVO.setHasRead(Const.MessageStatus.HAS_READ);// 可以视为已读
-        messageVO.setCreateTime(message.getCreateTime());
-        messageVO.setUpdateTime(message.getUpdateTime());
+        messageVO.setCreateTime(DateTimeUtil.dateToStr(message.getCreateTime()));
+        messageVO.setUpdateTime(DateTimeUtil.dateToStr(message.getUpdateTime()));
 
-        int targetId = message.getFromId().intValue() == hostHolder.getUser().getId().intValue() ? message.getToId()
-                .intValue() : message.getFromId().intValue();
+        int targetId = message.getFromId();
+                /*message.getFromId().intValue() == hostHolder.getUser().getId().intValue() ? message.getToId()
+                .intValue() : message.getFromId().intValue();*/
         User user = userMapper.selectByPrimaryKey(targetId);
         messageVO.setUserId(user.getId());
         messageVO.setUsername(user.getUsername());
