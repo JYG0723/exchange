@@ -107,7 +107,7 @@ public class MessageService implements IMessageService {
 
     private void updateHasRead(List<Message> messageList) {
         if (CollectionUtils.isEmpty(messageList)) {
-            log.error("用户的messageList为空");
+            log.warn("用户的messageList为空");
         }
         for (Message messageItem : messageList) {
             messageMapper.updateHasRead(messageItem.getId());

@@ -30,6 +30,13 @@ public class CommentController {
     @Autowired
     private IQuestionService iQuestionService;
 
+    /**
+     * 新增评论
+     * @param entityId 评论的实体的id
+     * @param entityType 评论的实体的类型
+     * @param content 评论的内容
+     * @return
+     */
     @PostMapping(value = "/add")
     public ServerResponse commentSave(@RequestParam(value = "entityId") Integer entityId,
                                       @RequestParam(value = "entityType") Integer entityType,

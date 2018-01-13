@@ -32,8 +32,8 @@ public class MessageController {
     /**
      * 获取会话列表
      *
-     * @param pageNum
-     * @param pageSize
+     * @param pageNum 页数
+     * @param pageSize 页面大小
      * @return
      */
     @GetMapping("/list")
@@ -48,6 +48,14 @@ public class MessageController {
         return iMessageService.getConversationList(localUserId, pageNum, pageSize);
     }
 
+    /**
+     * 获取会话详情
+     *
+     * @param conversationId 会话id
+     * @param pageNum        页数
+     * @param pageSize       页面大小
+     * @return
+     */
     @GetMapping("/{id}")
     public ServerResponse<PageInfo> getConversationDetail(@PathVariable(value = "id") String conversationId,
                                                           @RequestParam(value = "pageNum", defaultValue = "0")
@@ -57,6 +65,13 @@ public class MessageController {
         return iMessageService.getConversationDetail(conversationId, pageNum, pageSize);
     }
 
+    /**
+     * 新增消息
+     *
+     * @param toName  接收方
+     * @param content 上下文
+     * @return
+     */
     @PostMapping("/add")
     public ServerResponse messageSave(@RequestParam("toName") String toName,
                                       @RequestParam("content") String content) {
