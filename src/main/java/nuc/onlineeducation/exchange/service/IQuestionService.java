@@ -18,4 +18,10 @@ public interface IQuestionService {
     ServerResponse<QuestionDetailVO> getQuestionDetail(Integer questionId);
 
     ServerResponse updateCommentCount(Integer entityId, Integer count);
+
+    ServerResponse removeQuestionById(Integer questionId);
+
+    ServerResponse updateQuestion(Question question);
+
+    ServerResponse<PageInfo> getQuestions(Integer pageNum, Integer pageSize);
 }

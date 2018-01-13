@@ -76,14 +76,14 @@ public class CommentServiceImpl implements ICommentService {
         if (StringUtils.isBlank(entityId.toString()) || StringUtils.isBlank(entityType.toString())) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.ILLEGAL_ARGUEMENT.getCode(),
                     ResponseCodeEnum
-                    .ILLEGAL_ARGUEMENT.getDesc());
+                            .ILLEGAL_ARGUEMENT.getDesc());
         }
         int commentCount = commentMapper.getCommentCountByEntity(entityId, entityType);
         return ServerResponse.createBySuccess(commentCount);
     }
 
     @Override
-    public ServerResponse deleteCommentById(Integer commentId) {
+    public ServerResponse removeCommentById(Integer commentId) {
         if (StringUtils.isBlank(commentId.toString())) {
             return ServerResponse.createByErrorMessage("评论ID不能为空");
         }
@@ -92,6 +92,30 @@ public class CommentServiceImpl implements ICommentService {
             return ServerResponse.createByErrorMessage("评论删除失败");
         }
         return ServerResponse.createBySuccess();
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getComments(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Comment> comments = commentMapper.selectComments();
+        List<CommentVO> commentVOList = Lists.newArrayList();
+
+        for (Comment CommentItem : comments) {
+            CommentVO commentVO = assemableCommentVO(CommentItem);
+            commentVOList.add(commentVO);
+        }
+        PageInfo pageResult = new PageInfo(comments);
+        pageResult.setList(commentVOList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    @Override
+    public ServerResponse updateComment(Comment comment) {
+        int result = commentMapper.updateByPrimaryKeySelective(comment);
+        if (result > 0) {
+            return ServerResponse.createBySuccessMessage("评论详情更改成功");
+        }
+        return ServerResponse.createByErrorMessage("评论详情更改失败");
     }
 
     private CommentVO assemableCommentVO(Comment comment) {

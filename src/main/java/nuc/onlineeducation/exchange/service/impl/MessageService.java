@@ -105,6 +105,42 @@ public class MessageService implements IMessageService {
         return ServerResponse.createBySuccess(result);
     }
 
+    @Override
+    public ServerResponse removeMessageById(Integer messageId) {
+        if (StringUtils.isBlank(messageId.toString())) {
+            return ServerResponse.createByErrorMessage("评论ID不能为空");
+        }
+        int result = messageMapper.deleteByPrimaryKey(messageId);
+        if (result > 0) {
+            return ServerResponse.createByErrorMessage("评论删除失败");
+        }
+        return ServerResponse.createBySuccess();
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getMessages(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Message> messages = messageMapper.selectMessages();
+        List<MessageVO> messageVOList = Lists.newArrayList();
+
+        for (Message messageItem : messages) {
+            MessageVO messageVO = assembleMessageVO(messageItem);
+            messageVOList.add(messageVO);
+        }
+        PageInfo pageResult = new PageInfo(messages);
+        pageResult.setList(messageVOList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    @Override
+    public ServerResponse updateMessage(Message message) {
+        int result = messageMapper.updateByPrimaryKeySelective(message);
+        if (result > 0) {
+            return ServerResponse.createBySuccessMessage("消息详情更改成功");
+        }
+        return ServerResponse.createByErrorMessage("消息详情更改失败");
+    }
+
     private void updateHasRead(List<Message> messageList) {
         if (CollectionUtils.isEmpty(messageList)) {
             log.warn("用户的messageList为空");

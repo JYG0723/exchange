@@ -159,4 +159,10 @@
         SET status = #{status}
         WHERE entity_id = #{commentId}
     </update>
+    <select id="selectComments" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exchange_comment
+        ORDER BY create_time
+    </select>
 </mapper>

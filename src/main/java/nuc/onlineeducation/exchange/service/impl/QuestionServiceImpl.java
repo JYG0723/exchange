@@ -54,7 +54,7 @@ public class QuestionServiceImpl implements IQuestionService {
             question.setContent(iSensitiveService.filter(question.getContent()));
             int result = questionMapper.insert(question);
             if (result > 0) {
-                return ServerResponse.createBySuccess("新增问题成功",question.getId());
+                return ServerResponse.createBySuccess("新增问题成功", question.getId());
             }
         }
         return ServerResponse.createByErrorMessage("插入问题失败");
@@ -67,7 +67,7 @@ public class QuestionServiceImpl implements IQuestionService {
         }
 
         PageHelper.startPage(pageNum, pageSize);
-        List<Question> questions = questionMapper.selectList(userId);
+        List<Question> questions = questionMapper.selectListByUserId(userId);
         List<QuestionVO> questionVOList = Lists.newArrayList();
         for (Question questionItem : questions) {
             QuestionVO questionVO = assembleQuestionVO(questionItem);
@@ -103,6 +103,42 @@ public class QuestionServiceImpl implements IQuestionService {
             return ServerResponse.createBySuccessMessage("评论数修改成功");
         }
         return ServerResponse.createByErrorMessage("更新评论数量失败");
+    }
+
+    @Override
+    public ServerResponse removeQuestionById(Integer questionId) {
+        if (StringUtils.isBlank(questionId.toString())) {
+            return ServerResponse.createByErrorMessage("问题的id不能为空");
+        }
+        // 尽量别删
+        int result = questionMapper.deleteByPrimaryKey(questionId);
+        if (result > 0) {
+            return ServerResponse.createBySuccessMessage("删除成功");
+        }
+        return ServerResponse.createByErrorMessage("问题删除失败");
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getQuestions(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Question> questions = questionMapper.selectList();
+        List<QuestionVO> questionVOList = Lists.newArrayList();
+        for (Question questionItem : questions) {
+            QuestionVO questionVO = assembleQuestionVO(questionItem);
+            questionVOList.add(questionVO);
+        }
+        PageInfo pageResult = new PageInfo(questions);
+        pageResult.setList(questionVOList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    @Override
+    public ServerResponse updateQuestion(Question question) {
+        int result = questionMapper.updateByPrimaryKeySelective(question);
+        if (result > 0) {
+            return ServerResponse.createBySuccessMessage("问题详情更改成功");
+        }
+        return ServerResponse.createByErrorMessage("问题详情更改失败");
     }
 
     private QuestionVO assembleQuestionVO(Question question) {
