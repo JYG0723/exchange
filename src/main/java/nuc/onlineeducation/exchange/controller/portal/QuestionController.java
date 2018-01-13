@@ -44,11 +44,17 @@ public class QuestionController {
         question.setContent(content);
         question.setUserId(hostHolder.getUser().getId());
         question.setCommentCount(QUESTION_INIT_COMMENT_COUNT);
-        question.setCreateTime(DateTime.now().toDate() );
+        question.setCreateTime(DateTime.now().toDate());
         question.setUpdateTime(DateTime.now().toDate());
         return iQuestionService.saveQuestion(question);
     }
 
+    /**
+     * 问题详情
+     *
+     * @param questionId 问题id
+     * @return
+     */
     @GetMapping("/{id}")
     public ServerResponse<QuestionDetailVO> questionDetail(@PathVariable(value = "id") Integer questionId) {
         return iQuestionService.getQuestionDetail(questionId);

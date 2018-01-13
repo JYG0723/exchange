@@ -25,7 +25,7 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, entity_id, entity_type, status, create_time, update_time
+        id, user_id, entity_id, entity_type, status, create_time, update_time, content
     </sql>
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
         select
@@ -131,13 +131,13 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="nuc.onlineeducation.exchange.model.Comment">
         UPDATE exchange_comment
-        SET user_id      = #{userId,jdbcType=INTEGER},
-            entity_id    = #{entityId,jdbcType=INTEGER},
-            entity_type  = #{entityType,jdbcType=INTEGER},
-            status       = #{status,jdbcType=INTEGER},
-            create_time  = #{createTime,jdbcType=TIMESTAMP},
-            update_time  = now(),
-            content      = #{content,jdbcType=LONGVARCHAR}
+        SET user_id     = #{userId,jdbcType=INTEGER},
+            entity_id   = #{entityId,jdbcType=INTEGER},
+            entity_type = #{entityType,jdbcType=INTEGER},
+            status      = #{status,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = now(),
+            content     = #{content,jdbcType=LONGVARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
     <select id="selectCommentsByEntity" resultMap="BaseResultMap" parameterType="map">
@@ -152,7 +152,7 @@
         SELECT count(id)
         FROM exchange_comment
         WHERE entity_id = #{entityId}
-        AND entity_type = #{entityType}
+              AND entity_type = #{entityType}
     </select>
     <update id="updateCommentStatus" parameterType="map">
         UPDATE exchange_comment
