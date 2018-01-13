@@ -3,6 +3,8 @@ package nuc.onlineeducation.exchange.service;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.User;
 
+import java.util.List;
+
 /**
  * @author Ji YongGuang.
  * @date 0:07 2018/1/8.
@@ -19,7 +21,7 @@ public interface IUserService {
 
     ServerResponse checkValid(String str, String type);
 
-    ServerResponse<String> selectQuestion(String username);
+    ServerResponse<String> getQuestionByUsername(String username);
 
     ServerResponse<String> checkAnswer(String username, String question, String answer);
 
@@ -29,5 +31,7 @@ public interface IUserService {
 
     ServerResponse<User> updateInformation(User user);
 
-    ServerResponse<User> selectByUsername(String username);
+    ServerResponse<User> getUserByUsername(String username);
+
+    ServerResponse<List<User>> getTeachers();
 }

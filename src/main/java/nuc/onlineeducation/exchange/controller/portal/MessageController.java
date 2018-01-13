@@ -2,13 +2,13 @@ package nuc.onlineeducation.exchange.controller.portal;
 
 import com.github.pagehelper.PageInfo;
 import nuc.onlineeducation.exchange.common.Const;
-import nuc.onlineeducation.exchange.common.ResponseCodeEnum;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.HostHolder;
 import nuc.onlineeducation.exchange.model.Message;
 import nuc.onlineeducation.exchange.model.User;
 import nuc.onlineeducation.exchange.service.IMessageService;
 import nuc.onlineeducation.exchange.service.IUserService;
+import nuc.onlineeducation.exchange.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,9 +41,6 @@ public class MessageController {
                                                                 pageNum,
                                                         @RequestParam(value = "pageSize", defaultValue = "10") Integer
                                                                 pageSize) {
-        if (hostHolder.getUser() == null) {
-            return ServerResponse.createByErrorMessage("当前用户未登录");
-        }
         int localUserId = hostHolder.getUser().getId();
         return iMessageService.getConversationList(localUserId, pageNum, pageSize);
     }
@@ -75,12 +72,8 @@ public class MessageController {
     @PostMapping("/add")
     public ServerResponse messageSave(@RequestParam("toName") String toName,
                                       @RequestParam("content") String content) {
-        if (hostHolder.getUser() == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), ResponseCodeEnum
-                    .NEED_LOGIN.getDesc());
-        }
 
-        User user = iUserService.selectByUsername(toName).getData();
+        User user = iUserService.getUserByUsername(toName).getData();
         if (user == null) {
             return ServerResponse.createByErrorMessage("该用户不存在");
         }
@@ -88,7 +81,7 @@ public class MessageController {
         Message message = new Message();
         message.setFromId(hostHolder.getUser().getId());
         message.setToId(user.getId());
-        message.setContent(content);
+        message.setContent(PropertiesUtil.getProperty("."));
         message.setHasRead(Const.MessageStatus.UN_READ);
         return iMessageService.saveMessage(message);
     }
