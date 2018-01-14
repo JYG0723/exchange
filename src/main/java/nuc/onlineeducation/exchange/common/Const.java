@@ -32,9 +32,9 @@ public final class Const {
     @Getter
     public enum UserRoleEnum {    // 角色的权限
 
-        ROLE_ADMIN(0,"管理员"),
-        ROLE_STUDENT(1,"学生"),
-        ROLE_TEACHER(2,"老师");
+        ROLE_ADMIN(0, "管理员"),
+        ROLE_STUDENT(1, "学生"),
+        ROLE_TEACHER(2, "老师");
 
         private int code;
         private String value;
@@ -53,8 +53,8 @@ public final class Const {
     @AllArgsConstructor
     @Getter
     public enum CommentEntityTypeEnum {
-        QUESTION(0,"问题"),
-        COMMENT(1,"评论");
+        QUESTION(0, "问题"),
+        COMMENT(1, "评论");
 
         private int code;
         private String value;
@@ -64,4 +64,27 @@ public final class Const {
         int HAS_READ = 0;// 已读
         int UN_READ = 1;// 未读
     }
+
+    @AllArgsConstructor
+    @Getter
+    public enum OriginTypeEnum {// 意思意思
+        SOFTWARE_COLLEGE(14, "软件学院"),
+        BIGDATA_COLLEGE(7, "大数据学院"),
+        CHEMICALINDUSTRY_COLLEGE(1, "化工院"),
+        UNKNOWN(100, "未知来源");
+
+        private int code;
+        private String value;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public enum UploadFileType {
+        UPLOAD_PATH_IMAGE(1, "img"),
+        UPLOAD_PATH_FILE(2, "file");
+
+        private int code;
+        private String value;
+    }
+
 }

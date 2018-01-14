@@ -7,36 +7,30 @@ import lombok.Setter;
 
 /**
  * @author Ji YongGuang.
- * @date 19:43 2018/1/11.
+ * @date 0:09 2018/1/14.
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageVO {
+public class ProjectVO {
 
     private Integer id;
 
-    private Integer fromId;
+    private String title;
 
-    private Integer toId;
+    private Integer userId;
 
-    private String content;
-
-    private Integer hasRead;
-
-    // 未读数
-    private Integer unReadCount;
-
-    private String conversationId;
+    private Integer origin;
 
     private String createTime;
 
     private String updateTime;
 
-    private Integer userId;
+    private String detail;
 
     private String username;
 
-    private String headUrl;
+    private String originName;
+
 }

@@ -36,10 +36,10 @@ public class MessageController {
      * @param pageSize 页面大小
      * @return
      */
-    @GetMapping("/list")
-    public ServerResponse<PageInfo> getConversationList(@RequestParam(value = "pageNum", defaultValue = "0") Integer
+    @GetMapping("/")
+    public ServerResponse<PageInfo> getConversations(@RequestParam(value = "pageNum", defaultValue = "0") Integer
                                                                 pageNum,
-                                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer
+                                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer
                                                                 pageSize) {
         int localUserId = hostHolder.getUser().getId();
         return iMessageService.getConversationList(localUserId, pageNum, pageSize);
@@ -69,7 +69,7 @@ public class MessageController {
      * @param content 上下文
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("/")
     public ServerResponse messageSave(@RequestParam("toName") String toName,
                                       @RequestParam("content") String content) {
 

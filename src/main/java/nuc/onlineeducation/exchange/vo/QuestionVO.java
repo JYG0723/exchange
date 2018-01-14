@@ -1,17 +1,18 @@
 package nuc.onlineeducation.exchange.vo;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Setter;
 
 /**
  * @author Ji YongGuang.
  * @date 8:56 2018/1/8.
  */
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class QuestionVO {
 
     private Integer id; // question id

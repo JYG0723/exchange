@@ -135,6 +135,8 @@ public class MessageServiceImpl implements IMessageService {
 
     @Override
     public ServerResponse updateMessage(Message message) {
+        message.setContent(HtmlUtils.htmlEscape(message.getContent()));
+        message.setContent(iSensitiveService.filter(message.getContent()));
         int result = messageMapper.updateByPrimaryKeySelective(message);
         if (result > 0) {
             return ServerResponse.createBySuccessMessage("消息详情更改成功");

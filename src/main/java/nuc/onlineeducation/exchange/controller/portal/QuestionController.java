@@ -48,7 +48,7 @@ public class QuestionController {
      * @param content 内容
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("/")
     public ServerResponse<Integer> questionSave(@RequestParam(value = "title") String title,
                                                 @RequestParam(value = "content") String content) {// 拦截器 -> 登录用户权限
         Question question = new Question();
