@@ -269,9 +269,27 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccess("查询老师列表成功", teachers);
     }
 
-    /*public static void main(String[] args) {
-        String md5Password = MD5Util.MD5EncodeUtf8("USER0" + PropertiesUtil.getProperty("password.salt"));
+    @Override
+    public ServerResponse checkAdminRole(User user) {
+        // 这里不做非空判断如果user传过来为空 会报空指针
+        if (user != null && user.getRole().intValue() == Const.UserRoleEnum.ROLE_ADMIN.getCode()) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
+
+    @Override
+    public ServerResponse checkTeacherRole(User user) {
+        // 这里不做非空判断如果user传过来为空 会报空指针
+        if (user != null && user.getRole().intValue() == Const.UserRoleEnum.ROLE_TEACHER.getCode()) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
+
+    public static void main(String[] args) {
+        String md5Password = MD5Util.MD5EncodeUtf8("laoshi" + PropertiesUtil.getProperty("password.salt"));
         System.out.println(md5Password);
-    }*/
+    }
 
 }

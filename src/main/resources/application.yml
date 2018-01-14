@@ -17,6 +17,11 @@ spring:
       connection-test-query: SELECT 1
       idle-timeout: 600000
       max-lifetime: 1800000
+  http:
+    multipart:
+      max-file-size: 5Mb
+      enabled: true
+      max-request-size: 50Mb
 
 # Mybatis
 mybatis:

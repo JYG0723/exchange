@@ -37,7 +37,7 @@ public class CommentController {
      * @param content    评论的内容
      * @return
      */
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/")
     public ServerResponse commentSave(@RequestParam(value = "entityId") Integer entityId,
                                       @RequestParam(value = "entityType") Integer entityType,
                                       @RequestParam(value = "content") String content) {

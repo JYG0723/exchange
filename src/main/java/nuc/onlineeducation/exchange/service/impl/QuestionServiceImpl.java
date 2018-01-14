@@ -134,6 +134,12 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     public ServerResponse updateQuestion(Question question) {
+        // TML标签过滤H -> 转义
+        question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
+        question.setContent(HtmlUtils.htmlEscape(question.getContent()));
+        // 敏感词过滤
+        question.setTitle(iSensitiveService.filter(question.getTitle()));
+        question.setContent(iSensitiveService.filter(question.getContent()));
         int result = questionMapper.updateByPrimaryKeySelective(question);
         if (result > 0) {
             return ServerResponse.createBySuccessMessage("问题详情更改成功");

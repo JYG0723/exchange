@@ -111,6 +111,8 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public ServerResponse updateComment(Comment comment) {
+        comment.setContent(HtmlUtils.htmlEscape(comment.getContent()));
+        comment.setContent(iSensitiveService.filter(comment.getContent()));
         int result = commentMapper.updateByPrimaryKeySelective(comment);
         if (result > 0) {
             return ServerResponse.createBySuccessMessage("评论详情更改成功");

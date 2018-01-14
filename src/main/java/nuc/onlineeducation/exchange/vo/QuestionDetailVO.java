@@ -1,8 +1,6 @@
 package nuc.onlineeducation.exchange.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -10,9 +8,10 @@ import java.util.List;
  * @author Ji YongGuang.
  * @date 18:32 2018/1/11.
  */
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class QuestionDetailVO {
 
     private Integer id; // question id

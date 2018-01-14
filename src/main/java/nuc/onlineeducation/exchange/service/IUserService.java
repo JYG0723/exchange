@@ -34,4 +34,8 @@ public interface IUserService {
     ServerResponse<User> getUserByUsername(String username);
 
     ServerResponse<List<User>> getTeachers();
+
+    ServerResponse checkAdminRole(User user);
+
+    ServerResponse checkTeacherRole(User user);
 }

@@ -1,16 +1,15 @@
 package nuc.onlineeducation.exchange.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * @author Ji YongGuang.
  * @date 14:42 2018/1/11.
  */
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CommentVO {
 
     private Integer id;
