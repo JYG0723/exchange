@@ -38,4 +38,6 @@ public interface IUserService {
     ServerResponse checkAdminRole(User user);
 
     ServerResponse checkTeacherRole(User user);
+
+    ServerResponse<User> getInformation(Integer userId);
 }
