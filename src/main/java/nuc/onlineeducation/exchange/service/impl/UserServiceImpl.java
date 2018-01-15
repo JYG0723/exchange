@@ -287,6 +287,17 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createByError();
     }
 
+    @Override
+    public ServerResponse<User> getInformation(Integer userId) {
+        User currentUser = userMapper.selectByPrimaryKey(userId);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorMessage("未找到当前用户");
+        }
+        // 密码干掉
+        currentUser.setPassword(StringUtils.EMPTY);
+        return ServerResponse.createBySuccess("成功查询当前用户的个人信息",currentUser);
+    }
+
     public static void main(String[] args) {
         String md5Password = MD5Util.MD5EncodeUtf8("laoshi" + PropertiesUtil.getProperty("password.salt"));
         System.out.println(md5Password);

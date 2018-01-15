@@ -216,6 +216,22 @@ public class UserController {
     }
 
     /**
+     * 获取当前登录用户的详细信息
+     *
+     * @param
+     * @return
+     */
+    @GetMapping(value = "/profile")
+    public ServerResponse<User> getInformation() {
+        /*User currentUser = hostHolder.getUser();
+        if (currentUser == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), "用户未登录,请登录");
+        }*/
+//        currentUser.getId()
+        return iUserService.getInformation(49);
+    }
+
+    /**
      * 更新用户信息
      *
      * @param id

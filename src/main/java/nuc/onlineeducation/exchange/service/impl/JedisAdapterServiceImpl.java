@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+
 /**
  * @author Ji YongGuang.
  * @date 23:42 2018/1/14.
@@ -71,6 +73,34 @@ public class JedisAdapterServiceImpl implements InitializingBean, IJedisAdaoterS
         @Cleanup Jedis jedis = null;
         jedis = jedisPool.getResource();
         return jedis.sismember(key, value);
+    }
+
+    /**
+     * 将某个元素添加到队列中
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    @Override
+    public long lpush(String key, String value) {
+        @Cleanup Jedis jedis = null;
+        jedis = jedisPool.getResource();
+        return jedis.lpush(key, value);
+    }
+
+    /**
+     * 从某个队列中弹出一个元素
+     *
+     * @param timeout
+     * @param key
+     * @return
+     */
+    @Override
+    public List<String> brpop(int timeout, String key) {// brpop先进先出。blpop先进后出
+        @Cleanup Jedis jedis = null;
+        jedis = jedisPool.getResource();
+        return jedis.brpop(timeout, key);
     }
 
     @Override
