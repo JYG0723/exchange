@@ -83,6 +83,7 @@ public class QuestionServiceImpl implements IQuestionService {
         if (StringUtils.isBlank(questionId.toString())) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.ILLEGAL_ARGUEMENT.getCode(), "问题id不能为空");
         }
+        // 拿评论
         ServerResponse serverResponse = iCommentService.getCommentsByEntity(questionId, Const.CommentEntityTypeEnum
                 .QUESTION.getCode(), 0, 10);// 默认第0页 10条记录
         PageInfo pageInfo = (PageInfo) serverResponse.getData();

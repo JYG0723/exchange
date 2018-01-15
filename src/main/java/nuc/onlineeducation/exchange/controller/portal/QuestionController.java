@@ -6,15 +6,15 @@ import nuc.onlineeducation.exchange.model.HostHolder;
 import nuc.onlineeducation.exchange.model.Message;
 import nuc.onlineeducation.exchange.model.Question;
 import nuc.onlineeducation.exchange.model.User;
-import nuc.onlineeducation.exchange.service.ICommentService;
-import nuc.onlineeducation.exchange.service.IMessageService;
-import nuc.onlineeducation.exchange.service.IQuestionService;
-import nuc.onlineeducation.exchange.service.IUserService;
+import nuc.onlineeducation.exchange.service.*;
 import nuc.onlineeducation.exchange.util.PropertiesUtil;
+import nuc.onlineeducation.exchange.vo.CommentVO;
 import nuc.onlineeducation.exchange.vo.QuestionDetailVO;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Ji YongGuang.
@@ -37,6 +37,9 @@ public class QuestionController {
 
     @Autowired
     private IMessageService iMessageService;
+
+    @Autowired
+    private ILikeService iLikeService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -69,7 +72,21 @@ public class QuestionController {
      */
     @GetMapping("/{id}")
     public ServerResponse<QuestionDetailVO> questionDetail(@PathVariable(value = "id") Integer questionId) {
-        return iQuestionService.getQuestionDetail(questionId);
+        ServerResponse serverResponse = iQuestionService.getQuestionDetail(questionId);
+        if (!serverResponse.isSuccess()) {
+            return serverResponse;
+        }
+        QuestionDetailVO questionDetailVO = (QuestionDetailVO) serverResponse.getData();
+        List<CommentVO> commentVOList = questionDetailVO.getCommentVOList();
+        for (CommentVO commentVOItem : commentVOList
+                ) {
+//            49
+            commentVOItem.setLiked(iLikeService.likeEntityStatus(hostHolder.getUser().getId(), commentVOItem
+                    .getEntityType(), commentVOItem.getEntityId()).getData());
+            commentVOItem.setLikeCount(iLikeService.getLikeCount(commentVOItem.getEntityType(), commentVOItem
+                    .getEntityId()).getData());
+        }
+        return serverResponse;
     }
 
     /**
@@ -93,9 +110,9 @@ public class QuestionController {
         // 亲爱的 - ***老师 - *** 邀请你回答问题
         message.setContent(
                 PropertiesUtil.getProperty("exchange.greetings") +
-                helpUser.getUsername() + Const.UserRoleEnum.ROLE_TEACHER.getValue() +
-                " / " +
-                hardUser.getUsername() + PropertiesUtil.getProperty("question.invite.content")
+                        helpUser.getUsername() + Const.UserRoleEnum.ROLE_TEACHER.getValue() +
+                        " / " +
+                        hardUser.getUsername() + PropertiesUtil.getProperty("question.invite.content")
         );
         message.setHasRead(Const.MessageStatus.UN_READ);
         return iMessageService.saveMessage(message);
