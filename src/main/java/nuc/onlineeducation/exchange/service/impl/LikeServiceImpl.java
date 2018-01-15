@@ -38,9 +38,9 @@ public class LikeServiceImpl implements ILikeService {
     /**
      * 对一个实体的喜欢状态
      *
-     * @param userId
-     * @param entityType
-     * @param entityId
+     * @param userId 用户id
+     * @param entityType 赞的实体的类型
+     * @param entityId 赞的实体的id
      * @return
      */
     @Override
@@ -85,7 +85,7 @@ public class LikeServiceImpl implements ILikeService {
     public ServerResponse<Long> disLike(Integer userId, Integer entityType, Integer entityId) {
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);
         iJedisAdaoterService.sadd(disLikeKey, String.valueOf(userId));
-        String likeKey = RedisKeyUtil.getLikeKey(entityId, entityType);
+        String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         iJedisAdaoterService.srem(likeKey, String.valueOf(userId));
         Long likeCount = iJedisAdaoterService.scard(likeKey);
         return ServerResponse.createBySuccess("点踩后实体的喜欢数量", likeCount);

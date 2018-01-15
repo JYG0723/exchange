@@ -80,11 +80,12 @@ public class QuestionController {
         List<CommentVO> commentVOList = questionDetailVO.getCommentVOList();
         for (CommentVO commentVOItem : commentVOList
                 ) {
-//            49
-            commentVOItem.setLiked(iLikeService.likeEntityStatus(hostHolder.getUser().getId(), commentVOItem
-                    .getEntityType(), commentVOItem.getEntityId()).getData());
-            commentVOItem.setLikeCount(iLikeService.getLikeCount(commentVOItem.getEntityType(), commentVOItem
-                    .getEntityId()).getData());
+//            49hostHolder.getUser().getId()
+            commentVOItem.setLiked(iLikeService.likeEntityStatus(hostHolder.getUser().getId(), Const
+                            .LikeEntityTypeEnum.COMMENT.getCode(),
+                    commentVOItem.getId()).getData());
+            commentVOItem.setLikeCount(iLikeService.getLikeCount(Const.LikeEntityTypeEnum.COMMENT.getCode(),
+                    commentVOItem.getId()).getData());
         }
         return serverResponse;
     }

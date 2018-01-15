@@ -60,6 +60,15 @@ public final class Const {
         private String value;
     }
 
+    @AllArgsConstructor
+    @Getter
+    public enum LikeEntityTypeEnum {
+        COMMENT(1, "评论");
+
+        private int code;
+        private String value;
+    }
+
     public interface MessageStatus {
         int HAS_READ = 0;// 已读
         int UN_READ = 1;// 未读
