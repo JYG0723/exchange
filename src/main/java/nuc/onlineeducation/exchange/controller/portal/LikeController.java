@@ -34,7 +34,7 @@ public class LikeController {
                     .NEED_LOGIN.getDesc());
         }
         // 先写死喜欢评论
-        return iLikeService.like(user.getId(), Const.CommentEntityTypeEnum.COMMENT.getCode(),
+        return iLikeService.like(user.getId(), Const.LikeEntityTypeEnum.COMMENT.getCode(),
                 commentId);
     }
 
@@ -45,7 +45,7 @@ public class LikeController {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), ResponseCodeEnum
                     .NEED_LOGIN.getDesc());
         }
-        return iLikeService.disLike(user.getId(), Const.CommentEntityTypeEnum.COMMENT.getCode(),
+        return iLikeService.disLike(user.getId(), Const.LikeEntityTypeEnum.COMMENT.getCode(),
                 commentId);
     }
 }
