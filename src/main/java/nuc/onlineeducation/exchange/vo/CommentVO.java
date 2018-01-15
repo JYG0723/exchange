@@ -33,4 +33,8 @@ public class CommentVO {
     private String headUrl;
 
     private String introduce;
+    // 用户对该评论的feel
+    private Integer liked;
+    // 该评论被喜欢的数量
+    private Long likeCount;
 }
