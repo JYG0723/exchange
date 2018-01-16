@@ -8,7 +8,6 @@ import nuc.onlineeducation.exchange.model.Message;
 import nuc.onlineeducation.exchange.model.User;
 import nuc.onlineeducation.exchange.service.IMessageService;
 import nuc.onlineeducation.exchange.service.IUserService;
-import nuc.onlineeducation.exchange.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,8 +80,9 @@ public class MessageController {
         Message message = new Message();
         message.setFromId(hostHolder.getUser().getId());
         message.setToId(user.getId());
-        message.setContent(PropertiesUtil.getProperty("."));
+        message.setContent(content);
         message.setHasRead(Const.MessageStatus.UN_READ);
+//        message.setConversationId();
         return iMessageService.saveMessage(message);
     }
 }

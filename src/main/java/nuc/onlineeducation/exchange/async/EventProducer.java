@@ -20,7 +20,7 @@ public class EventProducer {
     private IJedisAdaoterService iJedisAdaoterService;
 
     /**
-     * 向队列中添加事件
+     * 向队列中推送事件
      * @param eventModel 具体的事件
      * @return
      */
@@ -32,7 +32,7 @@ public class EventProducer {
             iJedisAdaoterService.lpush(key, jsonEvent);
             return true;
         } catch (JsonProcessingException e) {
-            log.error("添加事件到队列失败");
+            log.error("推送事件到队列失败");
             return false;
         }
     }

@@ -120,6 +120,15 @@ public class CommentServiceImpl implements ICommentService {
         return ServerResponse.createByErrorMessage("评论详情更改失败");
     }
 
+    @Override
+    public ServerResponse<Comment> getCommentById(Integer commentId) {
+        if (StringUtils.isBlank(commentId.toString())) {
+            return ServerResponse.createByErrorMessage("评论的id不能为空");
+        }
+        Comment comment = commentMapper.selectByPrimaryKey(commentId);
+        return ServerResponse.createBySuccess(comment);
+    }
+
     private CommentVO assemableCommentVO(Comment comment) {
         CommentVO commentVO = new CommentVO();
         commentVO.setId(comment.getId());

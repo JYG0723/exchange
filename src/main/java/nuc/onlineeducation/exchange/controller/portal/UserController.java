@@ -2,6 +2,7 @@ package nuc.onlineeducation.exchange.controller.portal;
 
 import com.github.pagehelper.PageInfo;
 import nuc.onlineeducation.exchange.common.Const;
+import nuc.onlineeducation.exchange.common.ResponseCodeEnum;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.HostHolder;
 import nuc.onlineeducation.exchange.model.LoginTicket;
@@ -217,18 +218,16 @@ public class UserController {
 
     /**
      * 获取当前登录用户的详细信息
-     *
-     * @param
+
      * @return
      */
     @GetMapping(value = "/profile")
     public ServerResponse<User> getInformation() {
-        /*User currentUser = hostHolder.getUser();
+        User currentUser = hostHolder.getUser();
         if (currentUser == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), "用户未登录,请登录");
-        }*/
-//        currentUser.getId()
-        return iUserService.getInformation(49);
+        }
+        return iUserService.getInformation(currentUser.getId());
     }
 
     /**

@@ -24,11 +24,11 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注意顺序
         registry.addInterceptor(passportInterceptor);
-        registry.addInterceptor(loginRequiredInteceptor)
+/*        registry.addInterceptor(loginRequiredInteceptor)
                 .addPathPatterns("/users/password/reset")
                 .addPathPatterns("/questions/add")
                 .addPathPatterns("/comments/add")
-                .addPathPatterns("/messages/");
+                .addPathPatterns("/messages/");*/
         super.addInterceptors(registry);
     }
 }
