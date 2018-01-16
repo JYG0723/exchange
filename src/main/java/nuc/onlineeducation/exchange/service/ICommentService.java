@@ -22,4 +22,6 @@ public interface ICommentService {
     ServerResponse<PageInfo> getComments(Integer pageNum, Integer pageSize);
 
     ServerResponse updateComment(Comment comment);
+
+    ServerResponse<Comment> getCommentById(Integer commentId);
 }

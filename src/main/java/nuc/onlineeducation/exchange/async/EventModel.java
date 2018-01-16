@@ -1,14 +1,16 @@
 package nuc.onlineeducation.exchange.async;
 
 import com.google.common.collect.Maps;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 /**
  * @author Ji YongGuang.
  * @date 16:30 2018/1/15.
- * 具体的事件
+ * 具体的事件模型
  */
+@NoArgsConstructor
 public class EventModel {
 
     // 类型
@@ -21,7 +23,7 @@ public class EventModel {
     private Integer entityType;
     // 时间被触发的人
     private Integer entityOwnerId;
-
+    // 扩展字段，用来存储不同事件需要的额外信息
     private Map<String, String> exts = Maps.newHashMap();
 
     public EventModel(EventType eventType) {

@@ -32,6 +32,7 @@ public class Message {
 
     private String content;
 
+    // conversation不需要传了
     public String getConversationId() {
         if (fromId < toId) {
             return String.format("%d_%d", fromId, toId);
