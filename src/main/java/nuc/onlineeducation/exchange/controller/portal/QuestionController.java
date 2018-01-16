@@ -91,6 +91,20 @@ public class QuestionController {
     }
 
     /**
+     * 获取全部问题 / 分页处理
+     *
+     * @param pageNum 页数
+     * @param pageSize 页面大小
+     * @return
+     */
+    @GetMapping("/")
+    public ServerResponse getQuestions(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
+                                       @RequestParam(value = "pageSize", defaultValue = "10") Integer
+                                               pageSize) {
+        return iQuestionService.getQuestions(pageNum, pageSize);
+    }
+
+    /**
      * 邀请指定人回答 teacher/student
      *
      * @param toName 被邀请人

@@ -31,6 +31,17 @@ public class ProjectManageController {
     }
 
     /**
+     * 查看课题详细信息
+     *
+     * @param projectId 课题id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ServerResponse<Project> projectDetail(@PathVariable(value = "id") Integer projectId) {
+        return iProjectService.getProjectById(projectId);
+    }
+
+    /**
      * 更改课题信息
      * 1. 用户名 2 . 信息来源  涉及到用户信息不能改
      *

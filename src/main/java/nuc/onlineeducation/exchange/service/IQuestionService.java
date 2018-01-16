@@ -24,4 +24,6 @@ public interface IQuestionService {
     ServerResponse updateQuestion(Question question);
 
     ServerResponse<PageInfo> getQuestions(Integer pageNum, Integer pageSize);
+
+    ServerResponse<Question> getQuestionById(Integer questionId);
 }
