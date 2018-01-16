@@ -20,4 +20,6 @@ public interface IProjectService {
     ServerResponse removeProjectById(Integer projectId);
 
     ServerResponse updateProject(Project project);
+
+    ServerResponse<Project> getProjectById(Integer projectId);
 }

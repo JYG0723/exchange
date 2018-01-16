@@ -45,6 +45,17 @@ public class CommentManageController {
     }
 
     /**
+     * 查看评论详情
+     *
+     * @param commentId 评论id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ServerResponse<Comment> commentDetail(@PathVariable(value = "id") Integer commentId) {
+        return iCommentService.getCommentById(commentId);
+    }
+
+    /**
      * 更改评论详情
      * 1. 用户名 2 . 用户头像 3. 一句话介绍  涉及到用户信息不能改
      *

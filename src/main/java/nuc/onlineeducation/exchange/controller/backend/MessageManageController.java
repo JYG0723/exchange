@@ -45,6 +45,18 @@ public class MessageManageController {
     }
 
     /**
+     * 查看消息详情
+     *
+     * @param messageId 消息id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ServerResponse<Message> messageDetail(@PathVariable(value = "id") Integer messageId) {
+        return iMessageService.getMessageById(messageId);
+    }
+
+
+    /**
      * 更改消息详情
      * 1. 用户名 2 . 用户头像 3. 用户id  涉及到用户信息不能改
      * 4. 用户消息未读数 不能修改

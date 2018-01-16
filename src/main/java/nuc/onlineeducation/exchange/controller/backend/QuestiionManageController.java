@@ -1,7 +1,9 @@
 package nuc.onlineeducation.exchange.controller.backend;
 
 import nuc.onlineeducation.exchange.common.ServerResponse;
+import nuc.onlineeducation.exchange.model.HostHolder;
 import nuc.onlineeducation.exchange.model.Question;
+import nuc.onlineeducation.exchange.service.ILikeService;
 import nuc.onlineeducation.exchange.service.IQuestionService;
 import nuc.onlineeducation.exchange.vo.QuestionVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,12 @@ public class QuestiionManageController {
     @Autowired
     private IQuestionService iQuestionService;
 
+    @Autowired
+    private ILikeService iLikeService;
+
+    @Autowired
+    private HostHolder hostHolder;
+
     /**
      * 删除某个问题
      *
@@ -32,7 +40,7 @@ public class QuestiionManageController {
     /**
      * 获取全部问题 / 分页处理
      *
-     * @param pageNum 页数
+     * @param pageNum  页数
      * @param pageSize 页面大小
      * @return
      */
@@ -44,10 +52,21 @@ public class QuestiionManageController {
     }
 
     /**
+     * 查看问题详细信息
+     *
+     * @param questionId 问题id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ServerResponse<Question> questionDetail(@PathVariable(value = "id") Integer questionId) {
+        return iQuestionService.getQuestionById(questionId);
+    }
+
+    /**
      * 更改问题信息
      * 1. 用户名 2 . 用户头像 3. 一句话介绍  涉及到用户信息不能改
      *
-     * @param questionVO  questionVO
+     * @param questionVO questionVO
      * @return
      */
     @PutMapping("/change")

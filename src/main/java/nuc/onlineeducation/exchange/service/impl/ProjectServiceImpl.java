@@ -70,11 +70,20 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     public ServerResponse<ProjectVO> getProjectDetail(Integer projectId) {
         if (StringUtils.isBlank(projectId.toString())) {
-            return ServerResponse.createByErrorMessage("课程id不能为空");
+            return ServerResponse.createByErrorMessage("课题id不能为空");
         }
         Project project = projectMapper.selectByPrimaryKey(projectId);
         ProjectVO projectVO = assembleProjectVO(project);
         return ServerResponse.createBySuccess("查询课题详情成功", projectVO);
+    }
+
+    @Override
+    public ServerResponse<Project> getProjectById(Integer projectId) {
+        if (StringUtils.isBlank(projectId.toString())) {
+            return ServerResponse.createByErrorMessage("课题id不能为空");
+        }
+        Project project = projectMapper.selectByPrimaryKey(projectId);
+        return ServerResponse.createBySuccess("查询课题详情成功", project);
     }
 
     @Override

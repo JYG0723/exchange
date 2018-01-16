@@ -77,6 +77,15 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
+    public ServerResponse<Message> getMessageById(Integer messageId) {
+        if (StringUtils.isBlank(messageId.toString())) {
+            return ServerResponse.createByErrorMessage("课题id不能为空");
+        }
+        Message message = messageMapper.selectByPrimaryKey(messageId);
+        return ServerResponse.createBySuccess("查询课题详情成功", message);
+    }
+
+    @Override
     public ServerResponse<PageInfo> getConversationList(Integer userId, Integer pageNum, Integer pageSize) {
         if (StringUtils.isBlank(userId.toString()) || StringUtils.isBlank(pageNum.toString()) || StringUtils.isBlank
                 (pageSize.toString())) {

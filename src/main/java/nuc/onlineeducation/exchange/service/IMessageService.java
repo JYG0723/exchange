@@ -23,4 +23,6 @@ public interface IMessageService {
     ServerResponse<PageInfo> getMessages(Integer pageNum, Integer pageSize);
 
     ServerResponse updateMessage(Message message);
+
+    ServerResponse<Message> getMessageById(Integer messageId);
 }
