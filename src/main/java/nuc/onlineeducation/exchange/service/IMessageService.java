@@ -3,6 +3,7 @@ package nuc.onlineeducation.exchange.service;
 import com.github.pagehelper.PageInfo;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.Message;
+import nuc.onlineeducation.exchange.vo.MessageVO;
 
 /**
  * @author Ji YongGuang.
@@ -24,5 +25,5 @@ public interface IMessageService {
 
     ServerResponse updateMessage(Message message);
 
-    ServerResponse<Message> getMessageById(Integer messageId);
+    ServerResponse<MessageVO> getMessageById(Integer messageId);
 }

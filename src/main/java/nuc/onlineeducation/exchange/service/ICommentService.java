@@ -3,6 +3,7 @@ package nuc.onlineeducation.exchange.service;
 import com.github.pagehelper.PageInfo;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.Comment;
+import nuc.onlineeducation.exchange.vo.CommentVO;
 
 /**
  * @author Ji YongGuang.
@@ -23,5 +24,5 @@ public interface ICommentService {
 
     ServerResponse updateComment(Comment comment);
 
-    ServerResponse<Comment> getCommentById(Integer commentId);
+    ServerResponse<CommentVO> getCommentById(Integer commentId);
 }

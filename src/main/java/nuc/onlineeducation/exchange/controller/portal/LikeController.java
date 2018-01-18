@@ -6,11 +6,11 @@ import nuc.onlineeducation.exchange.async.EventType;
 import nuc.onlineeducation.exchange.common.Const;
 import nuc.onlineeducation.exchange.common.ResponseCodeEnum;
 import nuc.onlineeducation.exchange.common.ServerResponse;
-import nuc.onlineeducation.exchange.model.Comment;
 import nuc.onlineeducation.exchange.model.HostHolder;
 import nuc.onlineeducation.exchange.model.User;
 import nuc.onlineeducation.exchange.service.ICommentService;
 import nuc.onlineeducation.exchange.service.ILikeService;
+import nuc.onlineeducation.exchange.vo.CommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,24 +39,24 @@ public class LikeController {
 
     @GetMapping("/like/{id}")
     public ServerResponse like(@PathVariable(value = "id") Integer commentId) {
-        User user = hostHolder.getUser();
+        /*User user = hostHolder.getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), ResponseCodeEnum
                     .NEED_LOGIN.getDesc());
-        }
+        }*/
 
-        Comment comment = iCommentService.getCommentById(commentId).getData();
+        CommentVO commentVO = iCommentService.getCommentById(commentId).getData();
         // 异步化，把点赞事件推到异步队列   发站内信的事情交给异步队列去做 // hostHolder.getUser().getId()
         eventProducer.fireEvent(
                 new EventModel(EventType.LIKE)
                         .setEntityType(Const.LikeEntityTypeEnum.COMMENT.getCode())
                         .setEntityId(commentId)
-                        .setActorId(user.getId())//65
-                        .setEntityOwnerId(comment.getUserId())
-                        .setExt("questionId", comment.getEntityId().toString())
+                        .setActorId(63)//65
+                        .setEntityOwnerId(commentVO.getUserId())
+                        .setExt("questionId", commentVO.getEntityId().toString())
         );
         // 先写死喜欢评论
-        return iLikeService.like(user.getId(), Const.LikeEntityTypeEnum.COMMENT.getCode(),
+        return iLikeService.like(6, Const.LikeEntityTypeEnum.COMMENT.getCode(),
                 commentId);
     }
 

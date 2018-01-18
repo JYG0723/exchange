@@ -19,13 +19,13 @@ public class EventProducer {
     @Autowired
     private IJedisAdaoterService iJedisAdaoterService;
 
+    public static final ObjectMapper objectMapper = new ObjectMapper();
     /**
      * 向队列中推送事件
      * @param eventModel 具体的事件
      * @return
      */
     public boolean fireEvent(EventModel eventModel) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             String jsonEvent = objectMapper.writeValueAsString(eventModel);
             String key = RedisKeyUtil.getEventQueueKey();

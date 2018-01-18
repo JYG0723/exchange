@@ -122,12 +122,13 @@ public class CommentServiceImpl implements ICommentService {
     }
 
     @Override
-    public ServerResponse<Comment> getCommentById(Integer commentId) {
+    public ServerResponse<CommentVO> getCommentById(Integer commentId) {
         if (StringUtils.isBlank(commentId.toString())) {
             return ServerResponse.createByErrorMessage("评论的id不能为空");
         }
         Comment comment = commentMapper.selectByPrimaryKey(commentId);
-        return ServerResponse.createBySuccess(comment);
+        CommentVO commentVO = assemableCommentVO(comment);
+        return ServerResponse.createBySuccess(commentVO);
     }
 
     private CommentVO assemableCommentVO(Comment comment) {
@@ -147,4 +148,16 @@ public class CommentServiceImpl implements ICommentService {
         commentVO.setIntroduce(user.getIntroduce());
         return commentVO;
     }
+/*
+    private Comment assemableComment(CommentVO commentVO) {
+        Comment comment = new Comment();
+        comment.setId(comment.getId());
+        comment.setContent(comment.getContent());
+        comment.setEntityId(comment.getEntityId());
+        comment.setEntityType(comment.getEntityType());
+        comment.setCreateTime(DateTimeUtil.strToDate(commentVO.getCreateTime()));
+        comment.setUpdateTime(DateTimeUtil.strToDate(commentVO.getUpdateTime()));
+        comment.setStatus(comment.getStatus());
+        return comment;
+    }*/
 }

@@ -58,7 +58,7 @@ public class QuestiionManageController {
      * @return
      */
     @GetMapping("/{id}")
-    public ServerResponse<Question> questionDetail(@PathVariable(value = "id") Integer questionId) {
+    public ServerResponse<QuestionVO> questionDetail(@PathVariable(value = "id") Integer questionId) {
         return iQuestionService.getQuestionById(questionId);
     }
 
