@@ -2,6 +2,7 @@ package nuc.onlineeducation.exchange.async;
 
 import com.google.common.collect.Maps;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import java.util.Map;
  * 具体的事件模型
  */
 @NoArgsConstructor
+@ToString
 public class EventModel {
 
     // 类型

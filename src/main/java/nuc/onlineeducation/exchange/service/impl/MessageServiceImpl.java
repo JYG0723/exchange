@@ -77,12 +77,13 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
-    public ServerResponse<Message> getMessageById(Integer messageId) {
+    public ServerResponse<MessageVO> getMessageById(Integer messageId) {
         if (StringUtils.isBlank(messageId.toString())) {
             return ServerResponse.createByErrorMessage("课题id不能为空");
         }
         Message message = messageMapper.selectByPrimaryKey(messageId);
-        return ServerResponse.createBySuccess("查询课题详情成功", message);
+        MessageVO messageVO = assembleMessageVO(message);
+        return ServerResponse.createBySuccess("查询课题详情成功", messageVO);
     }
 
     @Override

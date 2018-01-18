@@ -35,6 +35,7 @@ public class LikeHandler implements EventHandler {
      */
     @Override
     public void doHandler(EventModel eventModel) {
+        System.out.println(eventModel);
         Message message = new Message();
         // 管理员负责业务通知
         message.setFromId(Const.ADMIN_ID);

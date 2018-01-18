@@ -51,7 +51,7 @@ public class CommentManageController {
      * @return
      */
     @GetMapping("/{id}")
-    public ServerResponse<Comment> commentDetail(@PathVariable(value = "id") Integer commentId) {
+    public ServerResponse<CommentVO> commentDetail(@PathVariable(value = "id") Integer commentId) {
         return iCommentService.getCommentById(commentId);
     }
 

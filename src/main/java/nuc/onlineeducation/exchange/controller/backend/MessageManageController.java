@@ -51,7 +51,7 @@ public class MessageManageController {
      * @return
      */
     @GetMapping("/{id}")
-    public ServerResponse<Message> messageDetail(@PathVariable(value = "id") Integer messageId) {
+    public ServerResponse<MessageVO> messageDetail(@PathVariable(value = "id") Integer messageId) {
         return iMessageService.getMessageById(messageId);
     }
 

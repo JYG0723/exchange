@@ -93,12 +93,13 @@ public class QuestionServiceImpl implements IQuestionService {
     }
 
     @Override
-    public ServerResponse<Question> getQuestionById(Integer questionId) {
+    public ServerResponse<QuestionVO> getQuestionById(Integer questionId) {
         if (StringUtils.isBlank(questionId.toString())) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.ILLEGAL_ARGUEMENT.getCode(), "问题id不能为空");
         }
         Question question = questionMapper.selectByPrimaryKey(questionId);
-        return ServerResponse.createBySuccess(question);
+        QuestionVO questionVO = assembleQuestionVO(question);
+        return ServerResponse.createBySuccess(questionVO);
     }
 
     @Override

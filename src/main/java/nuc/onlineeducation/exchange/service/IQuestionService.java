@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.model.Question;
 import nuc.onlineeducation.exchange.vo.QuestionDetailVO;
+import nuc.onlineeducation.exchange.vo.QuestionVO;
 
 /**
  * @author Ji YongGuang.
@@ -25,5 +26,5 @@ public interface IQuestionService {
 
     ServerResponse<PageInfo> getQuestions(Integer pageNum, Integer pageSize);
 
-    ServerResponse<Question> getQuestionById(Integer questionId);
+    ServerResponse<QuestionVO> getQuestionById(Integer questionId);
 }
