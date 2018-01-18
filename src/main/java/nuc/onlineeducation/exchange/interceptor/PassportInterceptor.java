@@ -53,7 +53,7 @@ public class PassportInterceptor implements HandlerInterceptor {
                 return true;// 放行去生成T票
             }
             //  T票有效
-            User user = iUserService.getUserById(loginTicket.getId()).getData();
+            User user = iUserService.getUserById(loginTicket.getUserId()).getData();
             if (user != null) {
                 hostHolder.setUser(user);// 同一Thread重置对象
             }

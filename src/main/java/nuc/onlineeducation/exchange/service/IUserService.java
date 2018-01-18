@@ -40,4 +40,6 @@ public interface IUserService {
     ServerResponse checkTeacherRole(User user);
 
     ServerResponse<User> getInformation(Integer userId);
+
+    ServerResponse<User> searchTeacherByUsername(String username);
 }

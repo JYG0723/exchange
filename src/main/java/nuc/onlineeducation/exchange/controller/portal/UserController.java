@@ -258,4 +258,9 @@ public class UserController {
         return iUserService.getTeachers();
     }
 
+    @GetMapping(path = "/search/teacher/{username}")
+    public ServerResponse<User> searchTeacher(@PathVariable(value = "username") String username) {
+        return iUserService.getUserByUsername(username);
+    }
+
 }
