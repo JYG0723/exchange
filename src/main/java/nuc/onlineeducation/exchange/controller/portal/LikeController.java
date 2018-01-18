@@ -39,11 +39,11 @@ public class LikeController {
 
     @GetMapping("/like/{id}")
     public ServerResponse like(@PathVariable(value = "id") Integer commentId) {
-        /*User user = hostHolder.getUser();
+        User user = hostHolder.getUser();
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.NEED_LOGIN.getCode(), ResponseCodeEnum
                     .NEED_LOGIN.getDesc());
-        }*/
+        }
 
         CommentVO commentVO = iCommentService.getCommentById(commentId).getData();
         // 异步化，把点赞事件推到异步队列   发站内信的事情交给异步队列去做 // hostHolder.getUser().getId()
@@ -51,12 +51,13 @@ public class LikeController {
                 new EventModel(EventType.LIKE)
                         .setEntityType(Const.LikeEntityTypeEnum.COMMENT.getCode())
                         .setEntityId(commentId)
-                        .setActorId(63)//65
+                        .setActorId(user.getId())//65
                         .setEntityOwnerId(commentVO.getUserId())
                         .setExt("questionId", commentVO.getEntityId().toString())
+//                        .setExts("questionId", commentVO.getEntityId().toString())
         );
         // 先写死喜欢评论
-        return iLikeService.like(6, Const.LikeEntityTypeEnum.COMMENT.getCode(),
+        return iLikeService.like(user.getId(), Const.LikeEntityTypeEnum.COMMENT.getCode(),
                 commentId);
     }
 

@@ -15,7 +15,9 @@ public interface IMessageService {
 
     ServerResponse<PageInfo> getConversationDetail(String conversationId, Integer pageNum, Integer pageSize);
 
-    ServerResponse<PageInfo> getConversationList(Integer userId, Integer pageNum, Integer pageSize);
+    ServerResponse<PageInfo> getConversationWithTouristsList(Integer userId, Integer pageNum, Integer pageSize);
+
+    ServerResponse<PageInfo> getConversationWithAdminList(Integer userId, Integer pageNum, Integer pageSize);
 
     ServerResponse<Integer> getConversationUnreadCount(Integer userId, String conversationId);
 

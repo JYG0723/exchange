@@ -13,7 +13,7 @@ public final class Const {
     private Const() {
     }
 
-    public static final Integer ADMIN_ID = 52;
+    public static final Integer ADMIN_ID = 0;
 
     public static final String INBOUND_LINKS = "localhost:8080";
 

@@ -29,20 +29,37 @@ public class MessageController {
     IUserService iUserService;
 
     /**
-     * 获取会话列表
+     * 获取与普通用户的会话列表
      *
-     * @param pageNum 页数
+     * @param pageNum  页数
      * @param pageSize 页面大小
      * @return
      */
     @GetMapping("/")
-    public ServerResponse<PageInfo> getConversations(@RequestParam(value = "pageNum", defaultValue = "0") Integer
-                                                                pageNum,
-                                                     @RequestParam(value = "pageSize", defaultValue = "10") Integer
-                                                                pageSize) {
+    public ServerResponse<PageInfo> getConversationsWithTourists(@RequestParam(value = "pageNum", defaultValue = "0")
+                                                                             Integer pageNum,
+                                                                 @RequestParam(value = "pageSize", defaultValue =
+                                                                         "10") Integer pageSize) {
         int localUserId = hostHolder.getUser().getId();
-        return iMessageService.getConversationList(localUserId, pageNum, pageSize);
+        return iMessageService.getConversationWithTouristsList(localUserId, pageNum, pageSize);
     }
+
+    /**
+     * 获取与管理员的会话列表
+     *
+     * @param pageNum  页数
+     * @param pageSize 页面大小
+     * @return
+     */
+    @GetMapping("/admin")
+    public ServerResponse<PageInfo> getConversationsWithAdmin(@RequestParam(value = "pageNum", defaultValue = "0")
+                                                                         Integer pageNum,
+                                                                 @RequestParam(value = "pageSize", defaultValue =
+                                                                         "10") Integer pageSize) {
+        int localUserId = hostHolder.getUser().getId();
+        return iMessageService.getConversationWithAdminList(localUserId, pageNum, pageSize);
+    }
+
 
     /**
      * 获取会话详情
