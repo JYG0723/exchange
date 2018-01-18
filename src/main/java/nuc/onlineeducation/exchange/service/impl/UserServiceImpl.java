@@ -226,10 +226,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServerResponse<User> updateInformation(User user) {
         // email 不能是已被注册的
-        int resultCount = userMapper.checkEmail(user.getEmail());
+        /*int resultCount = userMapper.checkEmail(user.getEmail());
         if (resultCount > 0) {
             return ServerResponse.createByErrorMessage("email已经存在，请更换email再尝试更新");
-        }
+        }*/
 
         User updateUser = new User();
         updateUser.setId(user.getId());
