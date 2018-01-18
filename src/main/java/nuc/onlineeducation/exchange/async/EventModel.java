@@ -23,10 +23,11 @@ public class EventModel {
     private Integer entityId;
     // 事件触发的实体的type
     private Integer entityType;
-    // 时间被触发的人
+    // 事件被触发的人
     private Integer entityOwnerId;
     // 扩展字段，用来存储不同事件需要的额外信息
     private Map<String, String> exts = Maps.newHashMap();
+//    private String eventEntityId;
 
     public EventModel(EventType eventType) {
         this.eventType = eventType;
@@ -40,6 +41,15 @@ public class EventModel {
     public String getExt(String key) {
         return exts.get(key);
     }
+
+/*    public String getEventEntityId() {
+        return eventEntityId;
+    }
+
+    public EventModel setEventEntityId(String eventEntityId) {
+        this.eventEntityId = eventEntityId;
+        return this;
+    }*/
 
     public EventType getEventType() {
         return eventType;
@@ -83,6 +93,15 @@ public class EventModel {
 
     public EventModel setEntityOwnerId(Integer entityOwnerId) {
         this.entityOwnerId = entityOwnerId;
+        return this;
+    }
+
+    public Map<String, String> getExts() {
+        return exts;
+    }
+
+    public EventModel setExts(Map<String, String> exts) {
+        this.exts = exts;
         return this;
     }
 }

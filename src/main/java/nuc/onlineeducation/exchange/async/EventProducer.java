@@ -27,7 +27,7 @@ public class EventProducer {
      */
     public boolean fireEvent(EventModel eventModel) {
         try {
-            String jsonEvent = objectMapper.writeValueAsString(eventModel);
+            String jsonEvent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventModel);
             String key = RedisKeyUtil.getEventQueueKey();
             iJedisAdaoterService.lpush(key, jsonEvent);
             return true;

@@ -42,7 +42,7 @@ public class LikeHandler implements EventHandler {
         message.setToId(eventModel.getEntityOwnerId());
         // 直接让用户跳到问题详情页
         message.setContent("用户:" + iUserService.getUserById(eventModel.getActorId()).getData().getUsername() +
-                "赞了你的评论，" + PRAISE_PREFIX + eventModel.getExt("questionId"));
+                "赞了你的评论，" + PRAISE_PREFIX + eventModel.getExt("questionId"));// "questionId"
         message.setHasRead(Const.CommentStatus.COMMENT_INVISIBLE);
         iMessageService.saveMessage(message);
     }

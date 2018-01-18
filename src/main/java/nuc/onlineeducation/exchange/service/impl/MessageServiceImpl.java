@@ -87,7 +87,7 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
-    public ServerResponse<PageInfo> getConversationList(Integer userId, Integer pageNum, Integer pageSize) {
+    public ServerResponse<PageInfo> getConversationWithTouristsList(Integer userId, Integer pageNum, Integer pageSize) {
         if (StringUtils.isBlank(userId.toString()) || StringUtils.isBlank(pageNum.toString()) || StringUtils.isBlank
                 (pageSize.toString())) {
             return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.ILLEGAL_ARGUEMENT.getCode(),
@@ -96,8 +96,46 @@ public class MessageServiceImpl implements IMessageService {
         PageHelper.startPage(pageNum, pageSize);
         List<Message> messageList = messageMapper.getConversationList(userId);
 
+        // 筛普通用户信息
+        List<Message> touristsMessages = Lists.newArrayList();
+        for (Message touristsMessageItem : messageList) {
+            if (!StringUtils.equals(touristsMessageItem.getFromId().toString(), Const.ADMIN_ID.toString()) &&
+                    !StringUtils.equals(touristsMessageItem.getToId().toString(), Const.ADMIN_ID.toString())) {
+                touristsMessages.add(touristsMessageItem);
+            }
+        }
+
         List<MessageVO> messageVOList = Lists.newArrayList();
-        for (Message messageItem : messageList) {
+        for (Message messageItem : touristsMessages) {
+            MessageVO messageVO = assembleMessageVO(messageItem);
+            messageVOList.add(messageVO);
+        }
+        PageInfo pageInfo = new PageInfo(messageList);
+        pageInfo.setList(messageVOList);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
+
+    @Override
+    public ServerResponse<PageInfo> getConversationWithAdminList(Integer userId, Integer pageNum, Integer pageSize) {
+        if (StringUtils.isBlank(userId.toString()) || StringUtils.isBlank(pageNum.toString()) || StringUtils.isBlank
+                (pageSize.toString())) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCodeEnum.ILLEGAL_ARGUEMENT.getCode(),
+                    ResponseCodeEnum.ILLEGAL_ARGUEMENT.getDesc());
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        List<Message> messageList = messageMapper.getConversationList(userId);
+
+        // 筛管理员信息
+        List<Message> touristsMessages = Lists.newArrayList();
+        for (Message touristsMessageItem : messageList) {
+            if (StringUtils.equals(touristsMessageItem.getFromId().toString(), Const.ADMIN_ID.toString()) ||
+                    StringUtils.equals(touristsMessageItem.getToId().toString(), Const.ADMIN_ID.toString())) {
+                touristsMessages.add(touristsMessageItem);
+            }
+        }
+
+        List<MessageVO> messageVOList = Lists.newArrayList();
+        for (Message messageItem : touristsMessages) {
             MessageVO messageVO = assembleMessageVO(messageItem);
             messageVOList.add(messageVO);
         }
