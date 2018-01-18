@@ -21,5 +21,5 @@ public interface IProjectService {
 
     ServerResponse updateProject(Project project);
 
-    ServerResponse<Project> getProjectById(Integer projectId);
+//    ServerResponse<Project> getProjectById(Integer projectId);
 }

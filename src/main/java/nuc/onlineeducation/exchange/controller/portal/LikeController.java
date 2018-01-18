@@ -51,7 +51,7 @@ public class LikeController {
                 new EventModel(EventType.LIKE)
                         .setEntityType(Const.LikeEntityTypeEnum.COMMENT.getCode())
                         .setEntityId(commentId)
-                        .setActorId(user.getId())
+                        .setActorId(user.getId())//65
                         .setEntityOwnerId(comment.getUserId())
                         .setExt("questionId", comment.getEntityId().toString())
         );

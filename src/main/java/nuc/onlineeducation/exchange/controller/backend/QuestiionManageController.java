@@ -74,8 +74,8 @@ public class QuestiionManageController {
         // VO -> 用户名 用户头像 一句话介绍 不能改
         Question question = new Question();
         question.setId(questionVO.getId());
+        question.setTitle(questionVO.getTitle());
         question.setContent(questionVO.getContent());
-        question.setTitle(questionVO.getContent());
         question.setUserId(questionVO.getUserId());
         question.setCommentCount(questionVO.getCommentCount());
         question.setCreateTime(question.getCreateTime());
