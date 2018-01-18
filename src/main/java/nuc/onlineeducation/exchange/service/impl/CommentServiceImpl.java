@@ -3,6 +3,7 @@ package nuc.onlineeducation.exchange.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import nuc.onlineeducation.exchange.common.Const;
 import nuc.onlineeducation.exchange.common.ResponseCodeEnum;
 import nuc.onlineeducation.exchange.common.ServerResponse;
 import nuc.onlineeducation.exchange.dao.CommentMapper;
@@ -87,7 +88,7 @@ public class CommentServiceImpl implements ICommentService {
         if (StringUtils.isBlank(commentId.toString())) {
             return ServerResponse.createByErrorMessage("评论ID不能为空");
         }
-        int result = commentMapper.deleteByPrimaryKey(commentId);
+        int result = commentMapper.updateCommentStatus(commentId, Const.CommentStatus.COMMENT_INVISIBLE);
         if (result > 0) {
             return ServerResponse.createByErrorMessage("评论删除成功");
         }

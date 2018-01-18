@@ -33,4 +33,5 @@ public class ProjectVO {
 
     private String originName;
 
+    private String headUrl;
 }

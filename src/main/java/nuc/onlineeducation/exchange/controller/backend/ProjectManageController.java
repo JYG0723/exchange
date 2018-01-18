@@ -37,8 +37,22 @@ public class ProjectManageController {
      * @return
      */
     @GetMapping("/{id}")
-    public ServerResponse<Project> projectDetail(@PathVariable(value = "id") Integer projectId) {
-        return iProjectService.getProjectById(projectId);
+    public ServerResponse<ProjectVO> projectDetail(@PathVariable(value = "id") Integer projectId) {
+        return iProjectService.getProjectDetail(projectId);
+    }
+
+    /**
+     * 获取全部课题 / 分页处理
+     *
+     * @param pageNum  页数
+     * @param pageSize 页面大小
+     * @return
+     */
+    @GetMapping("/")
+    public ServerResponse geProjects(@RequestParam(value = "pageNum", defaultValue = "0") Integer pageNum,
+                                       @RequestParam(value = "pageSize", defaultValue = "10") Integer
+                                               pageSize) {
+        return iProjectService.getProjects(pageNum, pageSize);
     }
 
     /**

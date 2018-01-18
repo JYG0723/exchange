@@ -77,14 +77,14 @@ public class ProjectServiceImpl implements IProjectService {
         return ServerResponse.createBySuccess("查询课题详情成功", projectVO);
     }
 
-    @Override
+   /* @Override
     public ServerResponse<Project> getProjectById(Integer projectId) {
         if (StringUtils.isBlank(projectId.toString())) {
             return ServerResponse.createByErrorMessage("课题id不能为空");
         }
         Project project = projectMapper.selectByPrimaryKey(projectId);
         return ServerResponse.createBySuccess("查询课题详情成功", project);
-    }
+    }*/
 
     @Override
     public ServerResponse removeProjectById(Integer projectId) {
@@ -145,6 +145,7 @@ public class ProjectServiceImpl implements IProjectService {
         projectVO.setUpdateTime(DateTimeUtil.dateToStr(project.getUpdateTime()));
 
         User user = userMapper.selectByPrimaryKey(project.getUserId());
+        projectVO.setHeadUrl(user.getHeadUrl());
         projectVO.setUserId(user.getId());
         projectVO.setUsername(user.getUsername());
         return projectVO;

@@ -239,7 +239,8 @@ public class UserController {
      */
     @PutMapping(value = "/{id}")
     public ServerResponse<User> updateInformation(@PathVariable(value = "id") Integer id, User user) {
-        user.setId(hostHolder.getUser().getId());
+//        hostHolder.getUser().getId();
+        user.setId(id);
         ServerResponse<User> response = iUserService.updateInformation(user);
         if (response.isSuccess()) {
             hostHolder.setUser(response.getData());
