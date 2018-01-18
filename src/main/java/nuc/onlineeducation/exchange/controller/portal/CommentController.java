@@ -49,7 +49,7 @@ public class CommentController {
         comment.setUserId(hostHolder.getUser().getId());
         comment.setStatus(Const.CommentStatus.COMMENT_VISIBLE);
         iCommentService.saveComment(comment);// commentId
-
+        // 写死了评论问题
         ServerResponse countResponse = iCommentService.getCommentCount(entityId, entityType);// commentCount
         return iQuestionService.updateCommentCount(comment.getEntityId(), (Integer) countResponse.getData());
     }
