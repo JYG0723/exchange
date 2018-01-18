@@ -208,7 +208,7 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("密码不能为空");
         }
 
-        int resultCount = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(passwordOld), user.getId());
+        int resultCount = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(passwordOld + PropertiesUtil.getProperty("password.salt")), user.getId());
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("旧密码错误");
         }
@@ -295,7 +295,7 @@ public class UserServiceImpl implements IUserService {
         }
         // 密码干掉
         currentUser.setPassword(StringUtils.EMPTY);
-        return ServerResponse.createBySuccess("成功查询当前用户的个人信息",currentUser);
+        return ServerResponse.createBySuccess("成功查询当前用户的个人信息", currentUser);
     }
 
     @Override

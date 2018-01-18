@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping(value = "/questions")
 public class QuestionController {
 
-    private static final Integer QUESTION_INIT_COMMENT_COUNT = 0;
+    private static final Integer QUESTION_INIT_COMMENT_COUNT = 0; // 问题初始化评论数量
 
     @Autowired
     private IQuestionService iQuestionService;

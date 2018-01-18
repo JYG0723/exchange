@@ -117,7 +117,7 @@ public class ProjectController {
             MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map resultMap = Maps.newHashMap();
 //        User user = hostHolder.getUser();
-        User user = iUserService.getUserById(65).getData();
+        User user = iUserService.getUserById(hostHolder.getUser().getId()).getData();
         if (user == null) {
             resultMap.put("success", false);
             resultMap.put("msg", "请登录教师账号");

@@ -67,7 +67,7 @@ public class MessageServiceImpl implements IMessageService {
         this.updateHasRead(messageList);// 信息设置为已读
         List<MessageVO> messageVOList = Lists.newArrayList();
         for (Message messageItem : messageList) {
-            MessageVO messageVO = assembleMessageVO(messageItem);
+            MessageVO messageVO = assembleMessageVOToDetail(messageItem);
             messageVOList.add(messageVO);
         }
 
@@ -82,7 +82,7 @@ public class MessageServiceImpl implements IMessageService {
             return ServerResponse.createByErrorMessage("课题id不能为空");
         }
         Message message = messageMapper.selectByPrimaryKey(messageId);
-        MessageVO messageVO = assembleMessageVO(message);
+        MessageVO messageVO = assembleMessageVOToDetail(message);
         return ServerResponse.createBySuccess("查询课题详情成功", messageVO);
     }
 
@@ -107,7 +107,7 @@ public class MessageServiceImpl implements IMessageService {
 
         List<MessageVO> messageVOList = Lists.newArrayList();
         for (Message messageItem : touristsMessages) {
-            MessageVO messageVO = assembleMessageVO(messageItem);
+            MessageVO messageVO = assembleMessageVOToList(messageItem);
             messageVOList.add(messageVO);
         }
         PageInfo pageInfo = new PageInfo(messageList);
@@ -136,7 +136,7 @@ public class MessageServiceImpl implements IMessageService {
 
         List<MessageVO> messageVOList = Lists.newArrayList();
         for (Message messageItem : touristsMessages) {
-            MessageVO messageVO = assembleMessageVO(messageItem);
+            MessageVO messageVO = assembleMessageVOToList(messageItem);
             messageVOList.add(messageVO);
         }
         PageInfo pageInfo = new PageInfo(messageList);
@@ -173,7 +173,7 @@ public class MessageServiceImpl implements IMessageService {
         List<MessageVO> messageVOList = Lists.newArrayList();
 
         for (Message messageItem : messages) {
-            MessageVO messageVO = assembleMessageVO(messageItem);
+            MessageVO messageVO = assembleMessageVOToDetail(messageItem);
             messageVOList.add(messageVO);
         }
         PageInfo pageResult = new PageInfo(messages);
@@ -201,22 +201,43 @@ public class MessageServiceImpl implements IMessageService {
         }
     }
 
-    private MessageVO assembleMessageVO(Message message) {
+    private MessageVO assembleMessageVOToDetail(Message message) {
         MessageVO messageVO = new MessageVO();
         messageVO.setId(message.getId());
         messageVO.setFromId(message.getFromId());
         messageVO.setToId(message.getToId());
         messageVO.setContent(message.getContent());
         messageVO.setConversationId(message.getConversationId());
-        messageVO.setUnReadCount(this.getConversationUnreadCount(49, message
+        messageVO.setUnReadCount(this.getConversationUnreadCount(hostHolder.getUser().getId(), message
                 .getConversationId()).getData());
         messageVO.setHasRead(Const.MessageStatus.HAS_READ);// 可以视为已读
         messageVO.setCreateTime(DateTimeUtil.dateToStr(message.getCreateTime()));
         messageVO.setUpdateTime(DateTimeUtil.dateToStr(message.getUpdateTime()));
 
-        int targetId = message.getFromId();
-                /*message.getFromId().intValue() == hostHolder.getUser().getId().intValue() ? message.getToId()
-                .intValue() : message.getFromId().intValue();*/
+        int targetId = message.getFromId().intValue() == hostHolder.getUser().getId().intValue() ? message.getToId()
+                .intValue() : message.getFromId().intValue();
+        User user = userMapper.selectByPrimaryKey(targetId);
+        messageVO.setUserId(user.getId());
+        messageVO.setUsername(user.getUsername());
+        messageVO.setHeadUrl(user.getHeadUrl());
+        return messageVO;
+    }
+
+    private MessageVO assembleMessageVOToList(Message message) {
+        MessageVO messageVO = new MessageVO();
+        messageVO.setId(message.getId());
+        messageVO.setFromId(message.getFromId());
+        messageVO.setToId(message.getToId());
+        messageVO.setContent(message.getContent());
+        messageVO.setConversationId(message.getConversationId());
+        messageVO.setUnReadCount(this.getConversationUnreadCount(hostHolder.getUser().getId(), message
+                .getConversationId()).getData());
+        messageVO.setHasRead(Const.MessageStatus.UN_READ);// 可以视为已读
+        messageVO.setCreateTime(DateTimeUtil.dateToStr(message.getCreateTime()));
+        messageVO.setUpdateTime(DateTimeUtil.dateToStr(message.getUpdateTime()));
+
+        int targetId = message.getFromId().intValue() == hostHolder.getUser().getId().intValue() ? message.getToId()
+                .intValue() : message.getFromId().intValue();
         User user = userMapper.selectByPrimaryKey(targetId);
         messageVO.setUserId(user.getId());
         messageVO.setUsername(user.getUsername());
