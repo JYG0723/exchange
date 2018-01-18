@@ -298,6 +298,18 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccess("成功查询当前用户的个人信息",currentUser);
     }
 
+    @Override
+    public ServerResponse<User> searchTeacherByUsername(String username) {
+        if (StringUtils.isBlank(username)) {
+            return ServerResponse.createByErrorMessage("教师名不能为空");
+        }
+        User teacher = userMapper.selectByUsername(username);
+        if (teacher != null) {
+            return ServerResponse.createByErrorMessage("当前教师不存在");
+        }
+        return ServerResponse.createBySuccess("所邀请教师信息", teacher);
+    }
+
     public static void main(String[] args) {
         String md5Password = MD5Util.MD5EncodeUtf8("laoshi" + PropertiesUtil.getProperty("password.salt"));
         System.out.println(md5Password);
