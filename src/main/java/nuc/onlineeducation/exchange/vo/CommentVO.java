@@ -1,6 +1,10 @@
 package nuc.onlineeducation.exchange.vo;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Ji YongGuang.
@@ -10,6 +14,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentVO {
 
     private Integer id;

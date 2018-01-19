@@ -15,7 +15,7 @@ public final class Const {
 
     public static final Integer ADMIN_ID = 0; // 管理员id
 
-    public static final String INBOUND_LINKS = "localhost:8080";
+    public static final String INBOUND_LINKS = "localhost:8080";//站内链接
 
     public static final String CURRENT_USER = "currentUser";
 
@@ -52,7 +52,7 @@ public final class Const {
 
     @AllArgsConstructor
     @Getter
-    public enum CommentEntityTypeEnum {
+    public enum CommentEntityTypeEnum {// 评论的实体的类型
         QUESTION(0, "问题"),
         COMMENT(1, "评论");
 
@@ -62,21 +62,21 @@ public final class Const {
 
     @AllArgsConstructor
     @Getter
-    public enum LikeEntityTypeEnum {
+    public enum LikeEntityTypeEnum {// 点赞的实体类型
         COMMENT(1, "评论");
 
         private int code;
         private String value;
     }
 
-    public interface MessageStatus {
+    public interface MessageStatus {// 站内信的状态
         int HAS_READ = 0;// 已读
         int UN_READ = 1;// 未读
     }
 
     @AllArgsConstructor
     @Getter
-    public enum OriginTypeEnum {// 意思意思
+    public enum OriginTypeEnum {// 课题来源
         SOFTWARE_COLLEGE(14, "软件学院"),
         BIGDATA_COLLEGE(7, "大数据学院"),
         CHEMICALINDUSTRY_COLLEGE(1, "化工院"),
@@ -88,7 +88,7 @@ public final class Const {
 
     @AllArgsConstructor
     @Getter
-    public enum UploadFileType {
+    public enum UploadFileType {// 上传文件类型
         UPLOAD_PATH_IMAGE(1, "img"),
         UPLOAD_PATH_FILE(2, "file");
 
