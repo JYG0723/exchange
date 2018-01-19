@@ -76,16 +76,18 @@ public class QuestionController {
         if (!serverResponse.isSuccess()) {
             return serverResponse;
         }
-        QuestionDetailVO questionDetailVO = (QuestionDetailVO) serverResponse.getData();
-        List<CommentVO> commentVOList = questionDetailVO.getCommentVOList();
-        for (CommentVO commentVOItem : commentVOList
-                ) {
+        if (hostHolder.getUser() != null) {
+            QuestionDetailVO questionDetailVO = (QuestionDetailVO) serverResponse.getData();
+            List<CommentVO> commentVOList = questionDetailVO.getCommentVOList();
+            for (CommentVO commentVOItem : commentVOList
+                    ) {
 //            49hostHolder.getUser().getId()
-            commentVOItem.setLiked(iLikeService.likeEntityStatus(hostHolder.getUser().getId(), Const
-                            .LikeEntityTypeEnum.COMMENT.getCode(),
-                    commentVOItem.getId()).getData());
-            commentVOItem.setLikeCount(iLikeService.getLikeCount(Const.LikeEntityTypeEnum.COMMENT.getCode(),
-                    commentVOItem.getId()).getData());
+                commentVOItem.setLiked(iLikeService.likeEntityStatus(hostHolder.getUser().getId(), Const
+                                .LikeEntityTypeEnum.COMMENT.getCode(),
+                        commentVOItem.getId()).getData());
+                commentVOItem.setLikeCount(iLikeService.getLikeCount(Const.LikeEntityTypeEnum.COMMENT.getCode(),
+                        commentVOItem.getId()).getData());
+            }
         }
         return serverResponse;
     }
@@ -93,7 +95,7 @@ public class QuestionController {
     /**
      * 获取全部问题 / 分页处理
      *
-     * @param pageNum 页数
+     * @param pageNum  页数
      * @param pageSize 页面大小
      * @return
      */
