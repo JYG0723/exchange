@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HostHolder {
 
-    private static final ThreadLocal<User> USER_THREAD_LOCAL = new ThreadLocal<>(); // Map<ThreadId,User>
+    private static final ThreadLocal<User> USER_THREAD_LOCAL = new ThreadLocal<>(); // Map<ThreadLocal,User>
 
     public User getUser() {
         return USER_THREAD_LOCAL.get();
