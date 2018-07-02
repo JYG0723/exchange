@@ -55,6 +55,7 @@ public class PassportInterceptor implements HandlerInterceptor {
             //  T票有效
             User user = iUserService.getUserById(loginTicket.getUserId()).getData();
             if (user != null) {
+                // 用户每次过来当前线程的ThreadLocal对应的对象都是当前用户
                 hostHolder.setUser(user);// 同一Thread重置对象
             }
         }
