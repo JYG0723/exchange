@@ -10,7 +10,7 @@
 
 问题广场：
 
-![](http://otsgsfu16.bkt.clouddn.com/18-7-2/6415436.jpg)
+![](https://ws1.sinaimg.cn/large/006pdbdvgy1g0c7up7od1j311i0i6abv.jpg)
 
 问题详情：
 
@@ -74,7 +74,7 @@
 
 后台课题管理页面：
 
-![](http://otsgsfu16.bkt.clouddn.com/18-7-2/9395956.jpg)
+![](https://ws1.sinaimg.cn/large/006pdbdvgy1g0c7vabh3sj31810pmjzi.jpg)
 
 后台站内信管理页面：
 
